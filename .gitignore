@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
+.env
+.env.local
+
+# 本地设计参考素材，不属于项目源码
+新建文件夹/

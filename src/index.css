@@ -1,0 +1,318 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #ffffff;
+  --color-cream: #f5f2ec;
+  --color-ink: #111111;
+  --color-gold: #a87c1f;
+  --color-goldlight: #c9a961;
+  --color-navy: #1b2a6b;
+  --color-muted: #6b6b6b;
+  --color-line: #e8e5e0;
+
+  --font-display: "Playfair Display", "Noto Serif SC", serif;
+  --font-body: "Noto Serif SC", "Source Han Serif SC", serif;
+  --font-sans: "Inter", sans-serif;
+}
+
+:root {
+  --paper: #ffffff;
+  --cream: #f5f2ec;
+  --ink: #111111;
+  --gold: #a87c1f;
+  --goldlight: #c9a961;
+  --navy: #1b2a6b;
+  --muted: #6b6b6b;
+  --line: #e8e5e0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Noto Serif SC", "Source Han Serif SC", serif;
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+.font-display {
+  font-family: "Playfair Display", "Noto Serif SC", serif;
+}
+
+.font-sans {
+  font-family: "Inter", sans-serif;
+}
+
+/* ===== 悬浮胶囊导航 ===== */
+.pill-nav {
+  position: fixed;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1100px, calc(100% - 40px));
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+}
+
+/* ===== 金色胶囊按钮 ===== */
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--gold);
+  color: #fff;
+  border-radius: 999px;
+  padding: 0.7rem 1.6rem;
+  font-family: "Inter", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: background 0.25s ease, transform 0.25s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-gold:hover {
+  background: #8f6919;
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.7rem 1.6rem;
+  font-family: "Inter", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: border-color 0.25s ease, color 0.25s ease;
+  cursor: pointer;
+}
+
+.btn-ghost:hover {
+  border-color: var(--ink);
+}
+
+/* ===== 大圆角 hero 卡片 ===== */
+.hero-card {
+  position: relative;
+  background: var(--cream);
+  border-radius: 28px;
+  overflow: hidden;
+  padding: clamp(3rem, 8vw, 7rem) clamp(1.5rem, 5vw, 5rem);
+  text-align: center;
+}
+
+/* 纸纹理：用极细噪点近似，避免引入图片资源 */
+.hero-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(200, 170, 100, 0.07) 0 1px, transparent 1px),
+    radial-gradient(circle at 70% 60%, rgba(120, 100, 60, 0.05) 0 1px, transparent 1px);
+  background-size: 24px 24px, 32px 32px;
+}
+
+/* 金色飘带装饰（SVG 由 HeroCard 内联） */
+.hero-ribbon {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* ===== 小标签 ===== */
+.eyebrow {
+  font-family: "Inter", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ===== 细分隔线 ===== */
+.hairline {
+  height: 1px;
+  background: var(--line);
+}
+
+/* ===== 数字：等宽，衬线体才有「公文」感 ===== */
+.figure {
+  font-family: "Playfair Display", "Noto Serif SC", serif;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.num-sans {
+  font-family: "Inter", sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===== 卡片 ===== */
+.prize-card {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--paper);
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.prize-card:hover {
+  border-color: var(--goldlight);
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.06);
+}
+
+/* ===== 章程 / 公文排版 ===== */
+.charter-body {
+  font-size: 1rem;
+  line-height: 2;
+}
+
+.charter-body h2 {
+  font-family: "Playfair Display", "Noto Serif SC", serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 3.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--line);
+  letter-spacing: 0.02em;
+}
+
+.charter-body h2:first-child {
+  margin-top: 0;
+}
+
+.charter-body h3 {
+  font-family: "Playfair Display", "Noto Serif SC", serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.charter-body p {
+  margin-bottom: 1.1rem;
+  text-align: justify;
+  text-justify: inter-ideograph;
+}
+
+.charter-body strong {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.charter-body blockquote {
+  border-left: 2px solid var(--goldlight);
+  padding-left: 1.5rem;
+  margin: 2rem 0;
+  color: var(--muted);
+  font-style: normal;
+}
+
+.charter-body ul,
+.charter-body ol {
+  margin-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.charter-body ul {
+  list-style: disc;
+}
+
+.charter-body ol {
+  list-style: decimal;
+}
+
+.charter-body li {
+  margin-bottom: 0.6rem;
+}
+
+.charter-body a {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.charter-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.75rem 0;
+  font-size: 0.9rem;
+}
+
+.charter-body th,
+.charter-body td {
+  border: 1px solid var(--line);
+  padding: 0.7rem 0.9rem;
+  text-align: left;
+}
+
+.charter-body th {
+  background: var(--cream);
+  font-weight: 600;
+}
+
+.charter-body code {
+  background: rgba(0, 0, 0, 0.04);
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  font-family: Menlo, Monaco, monospace;
+  font-size: 0.85em;
+}
+
+.charter-body pre {
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1.25rem 1.4rem;
+  overflow-x: auto;
+  margin: 1.75rem 0;
+  font-family: Menlo, Monaco, monospace;
+  font-size: 0.82rem;
+  line-height: 1.75;
+}
+
+.charter-body pre code {
+  background: none;
+  padding: 0;
+}
+
+/* ===== 滚动条 ===== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
