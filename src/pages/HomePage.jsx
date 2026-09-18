@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { HeroCard } from "../components/HeroCard";
 import { FundPanel } from "../components/FundPanel";
+import { FundLedger } from "../components/FundLedger";
 import { Countdown } from "../components/Countdown";
 import { SectionHeading } from "../components/SectionHeading";
 import { MarkdownBody } from "../components/MarkdownBody";
@@ -13,6 +14,7 @@ import { site } from "../data/site";
 import { useArticle } from "../hooks/useArticle";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { useI18n, localizedPath } from "../i18n";
+import { charterLink, charterRefClass } from "../utils/charter";
 
 export function HomePage() {
   useDocumentTitle(null);
@@ -45,6 +47,23 @@ export function HomePage() {
         >
           <div className="eyebrow mb-5 text-center">{t.countdown.toNext}</div>
           <Countdown />
+        </div>
+      </section>
+
+      {/* ── 账户流水 ─────────────────────────── */}
+      <section className="mt-14">
+        <div className="flex flex-wrap items-baseline justify-between gap-3">
+          <h2 className="font-display text-xl font-bold">{t.fund.ledgerTitle}</h2>
+          <Link
+            to={charterLink.chapter(2)}
+            className={charterRefClass}
+            style={{ color: "var(--gold)" }}
+          >
+            {t.fund.charterRef}
+          </Link>
+        </div>
+        <div className="mt-5">
+          <FundLedger />
         </div>
       </section>
 
@@ -87,7 +106,8 @@ export function HomePage() {
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {domains.map((d) => (
-            <DomainCard key={d.id} domain={d} />
+            // 首页是窄卡片（三列），预览少放一个奖项名，免得每张卡都拖很高
+            <DomainCard key={d.id} domain={d} maxAwards={3} />
           ))}
         </div>
       </section>
@@ -99,7 +119,6 @@ export function HomePage() {
           <div className="mt-8">
             <DrawRecord
               draw={latest}
-              metadata={data?.metadata}
               content={data?.content}
               loading={loading}
               error={error}

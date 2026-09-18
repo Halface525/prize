@@ -1,27 +1,22 @@
 import { MarkdownBody } from "./MarkdownBody";
 import { formatDate } from "../utils/time";
 import { formatAmount } from "../data/fund";
+import { winnerCount } from "../data/draws";
 import { useI18n, pick } from "../i18n";
+import { domainLabel } from "../utils/laureate";
 
-/** 一期开奖记录。frontmatter 里的结构化字段 + 正文的「获奖理由」。 */
-export function DrawRecord({ draw, metadata, content, loading, error }) {
+/**
+ * 一期开奖的完整记录：抬头 + 获奖人 + 「获奖理由」正文 + 结算。
+ *
+ * 元数据全部来自 draws.js 的 draw 对象，只有正文是从 markdown 拉的。
+ */
+export function DrawRecord({ draw, content, loading, error }) {
   const { lang, t } = useI18n();
 
-  if (loading) {
-    return <p className="py-10 text-center text-sm text-[var(--muted)]">{t.common.loading}</p>;
-  }
+  if (!draw) return null;
 
-  if (error) {
-    return (
-      <p className="py-10 text-center text-sm" style={{ color: "var(--gold)" }}>
-        {t.common.loadFailed}: {error}
-      </p>
-    );
-  }
-
-  if (!metadata) return null;
-
-  const winners = Array.isArray(metadata.winners) ? metadata.winners : [];
+  const winners = draw.winners ?? [];
+  const n = winnerCount(draw);
 
   return (
     <article className="prize-card overflow-hidden">
@@ -47,22 +42,20 @@ export function DrawRecord({ draw, metadata, content, loading, error }) {
             </span>
           )}
           <span className="font-sans text-[12px] text-[var(--muted)]">
-            {t.draw.pool} {formatAmount(metadata.pool ?? 0)}
+            {t.draw.pool} {formatAmount(draw.pool ?? 0)}
           </span>
         </div>
       </header>
 
       <div className="px-6 py-7 sm:px-8">
         {/* 获奖人摘要 */}
-        {winners.length > 0 && (
+        {n > 0 ? (
           <div className="mb-7 grid gap-4 sm:grid-cols-2">
             {winners.map((w, i) => (
               <div key={i} className="rounded-xl border p-4" style={{ borderColor: "var(--line)" }}>
-                <div className="font-display text-[15px] font-bold">
-                  {pick(w, "name", lang)}
-                </div>
+                <div className="font-display text-[15px] font-bold">{pick(w, "name", lang)}</div>
                 <div className="font-sans mt-1.5 text-[11px] text-[var(--muted)]">
-                  {pick(w, "domain", lang)} · {pick(w, "award", lang)}
+                  {domainLabel(w, lang)} · {pick(w, "award", lang)}
                 </div>
                 {w.metric && (
                   <div className="mt-3 border-t pt-3" style={{ borderColor: "var(--line)" }}>
@@ -75,10 +68,27 @@ export function DrawRecord({ draw, metadata, content, loading, error }) {
               </div>
             ))}
           </div>
+        ) : (
+          <p
+            className="mb-7 rounded-xl border p-4 text-[14px] leading-relaxed text-[var(--muted)]"
+            style={{ borderColor: "var(--line)" }}
+          >
+            {t.draw.vacantNote}
+          </p>
         )}
 
-        {/* 获奖理由（正文按语言取不同文件） */}
-        <MarkdownBody>{content}</MarkdownBody>
+        {/* 获奖理由 */}
+        {loading && (
+          <p className="py-10 text-center text-sm text-[var(--muted)]">{t.common.loading}</p>
+        )}
+
+        {error && (
+          <p className="py-10 text-center text-sm" style={{ color: "var(--gold)" }}>
+            {t.common.loadFailed}: {error}
+          </p>
+        )}
+
+        {content && <MarkdownBody>{content}</MarkdownBody>}
 
         {/* 结算 */}
         <div
@@ -86,15 +96,13 @@ export function DrawRecord({ draw, metadata, content, loading, error }) {
           style={{ borderColor: "var(--line)" }}
         >
           <span className="font-sans text-[12px] text-[var(--muted)]">
-            {t.draw.winnersCount(winners.length)}{" "}
-            <span className="font-sans text-[var(--ink)]">
-              {formatAmount(metadata.perWinner ?? 0)}
-            </span>
+            {t.draw.winnersCount(n)}{" "}
+            <span className="font-sans text-[var(--ink)]">{formatAmount(draw.perWinner ?? 0)}</span>
           </span>
           <span className="font-sans text-[12px] text-[var(--muted)]">
             {t.draw.balanceAfter}{" "}
             <span className="font-sans text-[var(--ink)]">
-              {formatAmount(metadata.balanceAfter ?? 0)}
+              {formatAmount(draw.balanceAfter ?? 0)}
             </span>
           </span>
         </div>

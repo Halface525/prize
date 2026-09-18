@@ -37,65 +37,175 @@
 
 ## 技术栈
 
-**React 19 + Vite 6 + Tailwind CSS 4 + react-router 7**，内容用 `gray-matter`
-解析 frontmatter、`react-markdown` 渲染，中英双语。与 halface 博客同一套栈。
+**React 19 + Vite 6 + Tailwind CSS 4 + react-router 7**，`react-markdown` 渲染正文，中英双语。
+与 halface 博客同一套栈，但**去掉了 `gray-matter`**。
 
-> ⚠️ `vite.config.js` 里的 `nodePolyfills({ include: ['buffer'] })` **不能删**。
-> `gray-matter` 依赖 Node 的 `Buffer`，浏览器里没有它。
-> 省掉的症状很阴——`npm run build` 照样成功，只有页面运行时报
-> `Buffer is not defined`，所有 markdown 内容全部加载失败。代价是包大 17 kB。
+> **为什么没有 gray-matter**：本项目所有元数据都放在 `src/data/` 的 JS 模块里，
+> markdown 只写正文，不需要解析 frontmatter。删掉它连带去掉了
+> `vite-plugin-node-polyfills` ——`gray-matter` 依赖 Node 的 `Buffer`，而那个 polyfill
+> 存在的唯一理由就是它。
+>
+> 这不是洁癖：**那个组合曾经让整站在运行时报 `Buffer is not defined`，而 `npm run build`
+> 照样成功**，没有任何提示。删掉等于永久消除这类故障。顺带包小了 121 kB（gzip 31 kB）。
+>
+> 若日后确实要用 frontmatter：装回 `gray-matter`，**并同时**在 `vite.config.js` 恢复
+> `nodePolyfills({ include: ['buffer'] })`。两者缺一不可，只加前者就会重现那个 bug。
 
 ## 本地开发
 
 ```bash
 npm install
-npm run dev      # http://localhost:5173
-npm run build    # 产物在 dist/
-npm run preview  # 预览构建产物
+npm run dev        # http://localhost:5173
+npm run build      # 产物在 dist/
+npm run preview    # 预览构建产物
+npm run check      # lint + 双语一致性校验（提交前跑一下）
 ```
+
+`npm run check:i18n` 单独跑双语校验。它查四件事：源码引用了但字典没定义的 key、
+zh/en 结构是否对应、动态取值（`t.nav[item.id]` 这类）的目标是否存在、
+该是函数的文案是不是函数。
+
+**这类漏 key 构建期不报错**，只在运行时渲染出 `undefined`，所以值得单独查。
+脚本在 `scripts/check-i18n.mjs`，退出码非 0 表示有问题，可以直接挂进 CI 或 pre-commit。
+
+> 数据层（`src/data/*.js`）刻意保持「纯 JS、可被 Node 直接 import」，
+> 所以里面的相对导入**显式写了 `.js` 扩展名**（Vite 不要求，Node 的 ESM 解析器要求）。
+> 这样数据层可以脱离构建单独跑校验脚本。组件层不受此约束。
 
 ## 每周开奖要改的东西
 
 只有三处，不碰任何组件：
 
-**1. 新增一期记录** —— 在 `public/content/draws/` 下加两个文件：
+**1. 写正文** —— 在 `public/content/draws/` 下加两个文件，**只写「获奖理由」，不写 frontmatter**：
 
 ```
 public/content/draws/2026-09-25.md       # 中文
 public/content/draws/2026-09-25.en.md    # 英文
 ```
 
-frontmatter 存结构化数据，正文写「获奖理由」（公文腔）：
-
-```yaml
----
-period: 2
-date: "2026-09-25"
-pool: 800.00
-perWinner: 800.00
-balanceAfter: 0
-winners:
-  - name: "化名"
-    nameEn: "A pseudonym"
-    domain: "身体"
-    domainEn: "The Body"
-    award: "食堂就餐次数最多奖"
-    awardEn: "Most Canteen Meals Prize"
-    metricLabel: "全学期就餐次数"
-    metricLabelEn: "Meals in a full term"
-    metric: "412"
----
-```
-
-**2. 登记期次** —— 在 `src/data/draws.js` 数组最前面加一行：
+**2. 登记整期** —— 在 `src/data/draws.js` 数组最前面加一项，元数据全在这里：
 
 ```js
-{ id: "2026-09-25", period: 2, date: "2026-09-25", file: "content/draws/2026-09-25.md" },
+{
+  id: "2026-09-25",
+  period: 2,
+  date: "2026-09-25",
+  pool: 800.00,
+  perWinner: 800.00,
+  balanceAfter: 0,
+  file: "content/draws/2026-09-25.md",
+  winners: [
+    {
+      name: "化名",
+      nameEn: "A pseudonym",
+      domainId: "body",          // 外键，必须是 domains.js 里的 id
+      award: "食堂就餐次数最多奖",
+      awardEn: "Most Canteen Meals Prize",
+      metricLabel: "全学期就餐次数",
+      metricLabelEn: "Meals in a full term",
+      metric: "412",
+    },
+  ],
+},
 ```
+
+**本期空缺**（无人获奖）时把 `winners` 留成空数组 `[]` 即可 —— 卡片会显示「本期空缺」，
+详情页会显示空缺说明。空缺按期数正常编号，不顺延、不合并。
+
+> **`domainId` 是外键，`award` 是字面值**，这个不对称是故意的：
+>
+> - `domainId` 指向 `domains.js`，领域名从那里取。领域改名时历史记录跟着变，不会烂掉；
+>   获奖名单的领域筛选也靠它。**别在这里硬编码中文领域名。**
+> - `award` 则照实记录当时授予的奖项名。章程第三十三条：开奖记录一经公示不予修改，
+>   所以这里记的是「当时颁了什么」，不跟着奖项库改名走。
+
+> **为什么元数据不放 markdown 的 frontmatter 里**：列表页（获奖名单）要显示获奖人，
+> 若获奖人存在 frontmatter，列表页就得把每一期的 md 都拉一遍，期数一多就废了。
+> 所以元数据全部集中在 `draws.js`，markdown 只留正文。公报用的是同一套存法。
 
 **3. 更新余额** —— 改 `src/data/fund.js` 里的 `balance` 和 `updatedAt`。
 
 > 章程第十一条：每次开奖后账户归零。所以开奖后这个数字应该变小，不是变大。
+> **支出不用在这里记** —— 账户流水（首页「账户流水」那一段）的支出一栏直接从
+> `draws.js` 推导，重复记两处迟早对不上。往账户里放钱时才需要在
+> `fund.js` 的 `deposits` 数组加一行。
+
+**4.（可选）发一条公报** —— 开奖预告、空缺说明、勘误、章程修订、委员会声明，
+以及对获奖者的通讯。详见下节。开奖内容不要在这里重复。
+
+## 公报
+
+「公报」放**关于这个奖本身**的正式文本，与「获奖名单」分工明确：
+
+| 栏目 | 放什么 |
+| --- | --- |
+| 获奖名单 | **结果** —— 谁赢了、赢了什么、获奖理由 |
+| 公报 · 公告 | 开奖预告、空缺说明、勘误、章程修订、委员会声明 |
+| 公报 · 通讯 | 对获奖者的报道——谈话记录、介绍、侧记 |
+
+**开奖内容只在获奖名单出现，公报不重复。** 两个栏目一旦互相覆盖，就都会变得可有可无。
+
+**「通讯」而不是「访谈」**：访谈太窄，介绍、侧记、人物特写都放不进去。通讯是中文新闻学里
+「比消息长、有描写、基于采访写成的报道」的标准体裁，**人物通讯**正是「介绍一个人」的写法。
+「新闻」也宽，但跟「公告」不在一个语域——公报里放「公告 / 新闻」像企业官网的新闻中心。
+
+新增一条：
+
+**1. 加正文** —— 在 `public/content/bulletin/` 下加两个文件（纯正文，**不写 frontmatter**）：
+
+```
+public/content/bulletin/2026-09-25-something.md       # 中文
+public/content/bulletin/2026-09-25-something.en.md    # 英文
+```
+
+**2. 登记** —— 在 `src/data/bulletin.js` 数组最前面加一项：
+
+```js
+{
+  id: "2026-09-25-something",
+  kind: "notice",              // notice（公告）| dispatch（通讯）
+  date: "2026-09-25",
+  title: "标题",
+  titleEn: "Title",
+  file: "content/bulletin/2026-09-25-something.md",
+},
+```
+
+> 注意公报和开奖记录的存法**不一样**，这是故意的：开奖记录的获奖人数据只有详情页用得上，
+> 所以放 markdown 的 frontmatter；公报的元数据（标题、日期、类别）列表页就要用，
+> 全放 `src/data/bulletin.js`，markdown 只写正文，避免两处维护同一份信息。
+
+**写通讯时注意**：全站都是公文腔，通讯是唯一能出现真人声音的地方，笑点就在两种语域的
+碰撞——委员会用公文腔提问或叙述，获奖者用正常人的话回答。**获奖者一开口就是公文腔，这块地就废了。**
+参照首页 `originClosing` 那句 "do something interesting."，那是全站唯一一处不是公文腔的收尾。
+
+栏目做成**只有公告也完全成立**的形态。通讯要真写（约人、提问、整理），没把握时不要承诺频率。
+
+## 章程锚点
+
+章程的每一章、每一条都有锚点 id，供全站「依据章程第X条」这类说法精确跳转：
+
+```
+/charter#ch-2     第二章 奖金
+/charter#art-11   第十一条 归零原则
+```
+
+id 由 `src/utils/charterAnchors.js` 从文本自动推导（`第二章` → `ch-2`，`第十一条` → `art-11`），
+中英两版生成**相同的 id**，所以一条链接在两个语言下都成立。渲染在 `MarkdownBody.jsx` 里接上。
+
+页面里写深链接用 helper，别手拼字符串：
+
+```jsx
+import { charterLink, charterRefClass } from "../utils/charter";
+
+<Link to={charterLink.article(11)} className={charterRefClass}>章程第 11 条 →</Link>
+```
+
+> ⚠️ 必须用 react-router 的 `<Link>`，**不能用原生 `<a href="#art-11">`**。
+> HashRouter 下原生 hash 会被路由器当成路径，跳到 `/art-11` 落到首页。
+
+`charterAnchors.js` 是纯函数、无 React 依赖，改完可以单独跑一遍验证——
+把中英两版章程的章条都解析一遍，比对 id 是否一致、条号有无跳号。
 
 ## 增设奖项
 
@@ -113,6 +223,52 @@ winners:
 - 结构化数据：`xxx` / `xxxEn` 成对，由 `pick()` 取值，英文缺失自动回退中文
 
 语言选择存在 `localStorage`，首次访问跟随浏览器语言。
+
+## 页面结构
+
+三个栏目都是**列表页 → 详情页**，路由各一个，别再往列表页里展开全文：
+
+| 列表 | 详情 | 详情里放什么 |
+| --- | --- | --- |
+| `/winners` | `/winners/:id` | 「获奖理由」全文 + 上下期翻页 |
+| `/domains` | `/domains/:id` | 该领域全部奖项 + 评选标准 + 上下领域翻页 |
+| `/bulletin` | `/bulletin/:id` | 公告 / 通讯全文 |
+
+其余路由：`/` 首页、`/charter` 章程、`/apply` 申请、`*` 404。
+**404 是独立页面**，不再回落到首页——否则拼错 URL 会静默显示首页，很难发现。
+
+**获奖名单可按领域筛选**，筛选按钮只列出「出过获奖者」的领域（全列出来会有大半是空的）。
+
+**为什么获奖名单和奖项要折叠**：两者都会无限增长——一年 52 期开奖，奖项库每期还可能新增。
+全铺在列表页上，几个月后就没法看了。
+
+**但两处折叠的尺度不同**：
+
+- **获奖名单**卡片保留获奖人姓名 + 领域 + 奖项 + 金额。收起来的是评语正文。
+- **奖项**卡片**保留奖项名作为预览**（`DomainCard` 的 `maxAwards`，默认 4，首页窄卡片传 3）。
+  「校园猫全勤奖」「从未鼓包奖」这些名字本身就是内容，全收进详情页就没了——
+  收起来的只是评选标准那段较长的文字。
+
+列表页都**不拉 markdown**，只用 `src/data/` 里的元数据，所以期数再多也不会有性能问题。
+只有详情页才 `useArticle()` 取正文。
+
+## 导航结构
+
+主导航在 `src/data/site.js` 的 `navItems`，页脚用 `footerItems`（= 主导航 + `footerOnlyItems`）。
+
+**导航栏只给「活的」内容。** 章程是静态文档，退到页脚和首页 hero 按钮；公报每周都有新的，
+占那一格。所以 `charter` 在 `footerOnlyItems` 里，不在 `navItems` 里——别以为它漏了。
+
+胶囊导航会滤掉 `apply`（它是右侧那个金色按钮），所以实际显示四项：首页 / 奖项 / 获奖名单 / 公报。
+窄屏下约 300px，375px 屏幕刚够。**别再往这里加第五项。**
+
+## 一处已知 lint 警告
+
+`npm run lint` 会报 3 条 `react-refresh/only-export-components`，都指向 `src/i18n/index.jsx`
+同时导出了组件（`I18nProvider`）和函数（`useI18n` / `pick` / `localizedPath`）。
+
+**这是良性的**，不影响构建和线上行为。唯一代价是改 `src/i18n/*.js` 的文案时触发整页刷新
+而不是热更新。要消掉得把非组件导出拆到另一个文件，会牵动十来处 import，暂时不值当。
 
 ## 部署
 

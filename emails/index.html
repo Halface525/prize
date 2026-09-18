@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>半面奖 · 邮件模板</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@400;600&family=Noto+Serif+SC:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #ffffff;
+    --cream: #f5f2ec;
+    --ink: #111111;
+    --gold: #a87c1f;
+    --goldlight: #c9a961;
+    --navy: #1b2a6b;
+    --muted: #6b6b6b;
+    --line: #e8e5e0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #faf9f7;
+    color: var(--ink);
+    font-family: 'Source Serif Pro', 'Noto Serif SC', Georgia, 'Songti SC', 'SimSun', serif;
+    line-height: 1.85;
+  }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 60px 24px 100px; }
+
+  .head { text-align: center; border-bottom: 1px solid var(--ink); padding-bottom: 36px; margin-bottom: 44px; }
+  .logo {
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 26px;
+  }
+  .mark { margin: 0 auto 26px; border-collapse: collapse; }
+  .mark td { width: 30px; height: 60px; font-size: 0; line-height: 0; }
+  .mark .m-left  { background: var(--goldlight); border-radius: 30px 0 0 30px; }
+  .mark .m-right { background: var(--navy); border-radius: 0 30px 30px 0; }
+  h1 { font-size: 34px; font-weight: 600; letter-spacing: 0.02em; }
+  .sub { font-size: 14px; font-style: italic; color: var(--muted); margin-top: 6px; }
+
+  .intro { max-width: 64ch; margin: 0 auto 36px; color: var(--muted); font-size: 15px; text-align: center; }
+
+  .note {
+    background: var(--paper); border: 1px solid var(--ink); padding: 26px 30px; margin-bottom: 48px;
+  }
+  .note h2 { font-size: 16px; font-weight: 600; margin-bottom: 14px; }
+  .note ol { padding-left: 1.4em; }
+  .note li { font-size: 14.5px; color: #444; margin-bottom: 9px; }
+  .note li b { color: var(--ink); font-weight: 600; }
+  .note .warn {
+    margin-top: 18px; padding: 14px 16px; background: var(--cream);
+    border-left: 2px solid var(--gold); font-size: 14px; color: #444;
+  }
+  .note .warn strong { color: var(--ink); }
+
+  .ph-table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+  .ph-table th, .ph-table td {
+    border-bottom: 1px solid var(--line); padding: 9px 12px 9px 0;
+    text-align: left; font-size: 14px; vertical-align: top;
+  }
+  .ph-table th {
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--muted); font-weight: 400; border-bottom-color: var(--ink);
+  }
+  .ph-table td:first-child {
+    font-family: Menlo, Monaco, monospace; font-size: 12.5px;
+    color: var(--gold); white-space: nowrap; padding-right: 20px;
+  }
+  .ph-table td:last-child { color: #444; }
+  .ph-table tr:last-child td { border-bottom: none; }
+
+  .card { background: var(--paper); border: 1px solid var(--ink); margin-bottom: 36px; }
+  .card-head { padding: 26px 30px 22px; border-bottom: 1px solid var(--ink); }
+  .card-head .num {
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold);
+  }
+  .card-head h2 { font-size: 22px; font-weight: 600; margin: 8px 0 4px; }
+  .when { font-size: 13.5px; color: var(--muted); }
+  .subject {
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 12.5px; background: var(--cream); border-left: 2px solid var(--gold);
+    padding: 10px 14px; margin-top: 16px; user-select: all; display: flex; gap: 10px; align-items: baseline;
+  }
+  .subject span { font-size: 10px; letter-spacing: 0.16em; color: var(--muted); flex-shrink: 0; }
+  .card-body { background: #f2f0ec; padding: 0; }
+  iframe { width: 100%; height: 760px; border: 0; display: block; }
+  .card-foot { padding: 16px 30px; border-top: 1px solid var(--line); }
+  .open {
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 12.5px; color: var(--gold); text-decoration: none;
+  }
+  .open:hover { text-decoration: underline; }
+
+  footer {
+    margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--line); text-align: center;
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 11.5px; color: var(--muted); line-height: 1.95;
+  }
+  footer .tagline { color: var(--gold); letter-spacing: 0.08em; margin: 6px 0; }
+  code { font-family: Menlo, Monaco, monospace; font-size: 0.9em; background: var(--cream); padding: 1px 5px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="head">
+    <div class="logo">Halface Prize</div>
+    <table role="presentation" class="mark" cellpadding="0" cellspacing="0" border="0" align="center">
+      <tr><td class="m-left">&nbsp;</td><td class="m-right">&nbsp;</td></tr>
+    </table>
+    <h1>邮件模板</h1>
+    <div class="sub">Email Templates</div>
+  </div>
+
+  <p class="intro">
+    委员会对外发送的五封信。深色块用藏青（与站点页脚同色），半面标记左金右藏青，
+    与网站 logo 同构。
+  </p>
+
+  <div class="note">
+    <h2>怎么用</h2>
+    <ol>
+      <li><b>发信</b>：在浏览器打开某一封 → 全选（Ctrl+A）→ 复制 → 粘进邮件正文。Gmail 会把样式转成内联，格式基本保留。</li>
+      <li><b>替换占位符</b>：文中所有 <b>＿＿</b> 都是待填的下划线，粘完逐个替换。</li>
+      <li><b>主题行</b>：每张卡片上那行可以直接复制，别用默认的「无主题」。</li>
+      <li><b>发之前</b>：先发一封给自己，<b>在手机上看一遍</b>——很多邮件问题只在窄屏上才显形。</li>
+    </ol>
+    <div class="warn">
+      <strong>钱的事：</strong>获奖通知承诺付款，但回执和通知里都写着「委员会从不在任何环节索要银行账户信息」。
+      执行时<strong>永远不要主动索要账户</strong>——让对方先提出收款方式，你再照办。
+      否则你在训练获奖者「收到要账户的邮件就给」，那正是诈骗的标准套路。
+    </div>
+  </div>
+
+  <div class="note" style="margin-bottom:48px;">
+    <h2>占位符对照表</h2>
+    <p style="font-size:14.5px;color:#444;margin-bottom:14px;">
+      文中所有 <code>{{大写英文}}</code> 都是待填的。粘进 Gmail 后按 <b>Ctrl+F 搜 <code>{{</code></b>
+      可以逐个跳过去，比一行行找快得多。<b>替换完最后搜一次 <code>{{</code>，确认一个不剩。</b>
+    </p>
+    <table class="ph-table">
+      <tr><th>占位符</th><th>填什么</th></tr>
+      <tr><td>{{DATE}}</td><td>本信日期（落款），如「2026 年 9 月 18 日」</td></tr>
+      <tr><td>{{RECEIVED_DATE}}</td><td>收到申请的日期。可与本信日期不同</td></tr>
+      <tr><td>{{DRAW_DATE}}</td><td>开奖日期。可与本信日期不同</td></tr>
+      <tr><td>{{REF}}</td><td>申请编号，自行编排，如「2026-0918-01」</td></tr>
+      <tr><td>{{PERIOD}}</td><td>期次，如「1」</td></tr>
+      <tr><td>{{NAME}}</td><td>受聘人姓名（仅聘书）</td></tr>
+      <tr><td>{{TERM}}</td><td>任期，如「一年，可续」</td></tr>
+      <tr><td>{{MEMBERS}}</td><td>委员会现有委员人数</td></tr>
+      <tr><td>{{LAUREATE}}</td><td>公示所用称谓（真名、化名或其他）</td></tr>
+      <tr><td>{{DOMAIN_NUM}}</td><td>领域罗马数字，如「IV」——站点上「奖项」页有</td></tr>
+      <tr><td>{{DOMAIN_CN}}</td><td>领域中文名，如「关系」</td></tr>
+      <tr><td>{{DOMAIN_EN}}</td><td>领域英文名，如「Relations」</td></tr>
+      <tr><td>{{AWARD_CN}}</td><td>奖项中文名，如「宿舍和平奖」</td></tr>
+      <tr><td>{{AWARD_EN}}</td><td>奖项英文名，如「Dormitory Peace Prize」</td></tr>
+      <tr><td>{{AMOUNT}}</td><td>每人实得金额，只填数字，如「623.65」</td></tr>
+      <tr><td>{{POOL}}</td><td>本期奖金总额，只填数字，如「1,247.30」</td></tr>
+      <tr><td>{{COUNT}}</td><td>同届获奖人数</td></tr>
+      <tr><td>{{REASON}}</td><td>02 填获奖理由，05 填修订理由</td></tr>
+      <tr><td>{{BEFORE}} / {{AFTER}}</td><td>修订前后的条文原文（仅 05）</td></tr>
+      <tr><td>{{ARTICLE_NUM}}</td><td>章程条号，如「11」（仅 05）</td></tr>
+      <tr><td>{{SCOPE}}</td><td>填「涉及」或「不涉及」（仅 05）</td></tr>
+      <tr><td>{{URL}}</td><td>公示页地址（仅 04）</td></tr>
+    </table>
+    <div class="warn">
+      <strong>{{REASON}} 不要另写一份。</strong>委员会为网站公示写的那段「获奖理由」就是它。
+      两处措辞不一致时以网站为准（章程第三十三条：开奖记录一经公示不予修改），
+      所以直接复制网站那段，别重写。
+    </div>
+    <p style="font-size:14px;color:#444;margin-top:16px;">
+      <strong>页脚的站点地址是写死的</strong>，不是占位符——它已经确定了：
+      <code>halface525.github.io/prize</code>。
+      日后若换自定义域名，五个文件都要改（搜 <code>halface525</code>）。
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="num">01</div>
+      <h2>申请回执</h2>
+      <p class="when">收到申请后回一封。可以设成 Gmail 自动回复，但建议手动回——自动回复会让这个奖显得是自动的。</p>
+      <div class="subject"><span>主题</span>【半面奖】申请已收到</div>
+    </div>
+    <div class="card-body"><iframe src="01-application-received.html" title="申请回执" loading="lazy"></iframe></div>
+    <div class="card-foot"><a class="open" href="01-application-received.html" target="_blank">单独打开 →</a></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="num">02</div>
+      <h2>获奖通知</h2>
+      <p class="when">评选结束后发给获奖者。这一封是全站唯一不用公文腔的地方——报喜的信不该端着。领奖那段保留了拒绝领奖和化名公示的权利。</p>
+      <div class="subject"><span>主题</span>【半面奖】获奖通知 · 第 ＿ 期</div>
+    </div>
+    <div class="card-body"><iframe src="02-award-notification.html" title="获奖通知" loading="lazy"></iframe></div>
+    <div class="card-foot"><a class="open" href="02-award-notification.html" target="_blank">单独打开 →</a></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="num">03</div>
+      <h2>委员会聘书</h2>
+      <p class="when">委员会有人加入时发。核心是「委员无报酬」和「不得以本奖名义收钱」——把「这个奖不收钱」从口号变成对被聘者的约束。</p>
+      <div class="subject"><span>主题</span>【半面奖】委员会聘书</div>
+    </div>
+    <div class="card-body"><iframe src="03-committee-appointment.html" title="委员会聘书" loading="lazy"></iframe></div>
+    <div class="card-foot"><a class="open" href="03-committee-appointment.html" target="_blank">单独打开 →</a></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="num">04</div>
+      <h2>公示完成通知</h2>
+      <p class="when">网站公示之后发给获奖者，附链接。这一封是给对方留痕——日后若有争议，它是委员会已尽告知义务的凭据。</p>
+      <div class="subject"><span>主题</span>【半面奖】公示完成 · 第 ＿ 期</div>
+    </div>
+    <div class="card-body"><iframe src="04-publication-notice.html" title="公示完成通知" loading="lazy"></iframe></div>
+    <div class="card-foot"><a class="open" href="04-publication-notice.html" target="_blank">单独打开 →</a></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="num">05</div>
+      <h2>章程修订通知</h2>
+      <p class="when">改章程之后发，同时贴进网站的「公报」。修订前后对照那两块是重点——章程第三十六条承诺不溯及既往，得让人看出来改了什么。</p>
+      <div class="subject"><span>主题</span>【半面奖】章程修订通知</div>
+    </div>
+    <div class="card-body"><iframe src="05-charter-amendment.html" title="章程修订通知" loading="lazy"></iframe></div>
+    <div class="card-foot"><a class="open" href="05-charter-amendment.html" target="_blank">单独打开 →</a></div>
+  </div>
+
+  <footer>
+    <p>HALFACE PRIZE · 半面奖</p>
+    <p class="tagline">1 member · 0 capital · ∞ interesting</p>
+    <p style="margin-top:14px;">这五个文件不参与网站构建，放在 <code>emails/</code> 下，不会被部署上去。<br>
+    若要连同网站一起公开（这本身也是一种公示），把整个目录移到 <code>public/emails/</code>。</p>
+  </footer>
+
+</div>
+</body>
+</html>

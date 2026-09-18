@@ -41,7 +41,9 @@ Push-Location dist
 try {
     git init -b gh-pages --quiet
     git add -A
-    git -c user.name="halface" -c user.email="halface16@gmail.com" commit --quiet -m $Message
+    # 不加 -c user.name/email：沿用全局 git 配置，这样 gh-pages 上的提交
+    # 归到你自己的 GitHub 账号名下，而不是某个写死的邮箱
+    git commit --quiet -m $Message
     if ($LASTEXITCODE -ne 0) { throw "提交失败" }
 
     # 3. 推送（强制覆盖是预期的：这个分支只装产物，历史没有意义）

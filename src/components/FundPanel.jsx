@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { fund, formatAmount } from "../data/fund";
 import { useI18n } from "../i18n";
+import { charterLink, charterRefClass } from "../utils/charter";
 
 /** 奖金账户公示条 */
 export function FundPanel({ compact = false }) {
@@ -36,8 +37,8 @@ export function FundPanel({ compact = false }) {
       {!compact && (
         <div className="mt-6 border-t pt-5" style={{ borderColor: "var(--line)" }}>
           <Link
-            to="/charter"
-            className="font-sans text-[12px] transition-opacity hover:opacity-60"
+            to={charterLink.chapter(2)}
+            className={charterRefClass}
             style={{ color: "var(--gold)" }}
           >
             {t.fund.charterRef}

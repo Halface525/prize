@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="x-apple-disable-message-reformatting">
+<meta name="color-scheme" content="light">
+<meta name="supported-color-schemes" content="light">
+<title>半面奖 · 获奖通知</title>
+<style>
+  /* 字体：Source Serif Pro 与本项目站点用的 Playfair Display 同属高对比度衬线，
+     邮件里加载不出来时退到 Georgia。中文退到宋体。 */
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&family=Source+Serif+Pro:wght@400;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Serif Pro', 'Noto Serif SC', Georgia, 'Songti SC', 'SimSun', serif;
+    background-color: #faf9f7;
+    color: #111111;
+    line-height: 1.85;
+    padding: 40px 20px;
+  }
+
+  .container {
+    max-width: 560px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid #111111;
+  }
+
+  /* ── 抬头 ── */
+  .header {
+    padding: 56px 48px 40px;
+    border-bottom: 1px solid #111111;
+    text-align: center;
+  }
+
+  .logo {
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #6b6b6b;
+    margin-bottom: 28px;
+  }
+
+  /* 半面标记：左金右藏青，与站点的半圆标记同构。
+     用两格 table 拼，因为在邮件里画不出圆（不能用 SVG，图片又默认被屏蔽）。 */
+  .mark { margin: 0 auto 28px; border-collapse: collapse; }
+  .mark td { width: 26px; height: 52px; font-size: 0; line-height: 0; }
+  .mark .m-left  { background: #c9a961; border-radius: 26px 0 0 26px; }
+  .mark .m-right { background: #1b2a6b; border-radius: 0 26px 26px 0; }
+
+  h1 { font-size: 30px; font-weight: 600; margin-bottom: 8px; letter-spacing: 0.02em; }
+
+  .subtitle { font-size: 14px; color: #6b6b6b; font-style: italic; }
+
+  /* ── 正文 ── */
+  .content { padding: 44px 48px; }
+  .greeting { font-size: 16px; margin-bottom: 28px; }
+  .body-text { font-size: 15px; margin-bottom: 22px; color: #333333; text-align: justify; }
+
+  /* ── 奖项块 ── */
+  .award-box {
+    background: #1b2a6b;
+    color: #ffffff;
+    padding: 38px 30px;
+    margin: 38px 0;
+    text-align: center;
+  }
+  .award-domain {
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: #c9a961; margin-bottom: 16px;
+  }
+  .award-title { font-size: 23px; font-weight: 600; margin-bottom: 6px; }
+  .award-title-cn { font-size: 17px; opacity: 0.9; }
+  .award-amount {
+    font-size: 34px; font-weight: 600; margin-top: 22px; letter-spacing: 1px;
+    padding-top: 20px; border-top: 1px solid rgba(201,169,97,0.45);
+  }
+  .award-note {
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 11px; opacity: 0.65; margin-top: 8px;
+  }
+
+  /* ── 细节表 ──
+     用 table 而不是 flex：Outlook 用 Word 的渲染引擎，不认 display:flex，
+     那会让标签和值挤成一行。 */
+  .details { width: 100%; border-collapse: collapse; margin: 30px 0; }
+  .details td {
+    padding: 14px 0;
+    border-bottom: 1px solid #e8e5e0;
+    font-size: 14px;
+    vertical-align: top;
+  }
+  .detail-label { color: #6b6b6b; }
+  .detail-value { color: #111111; font-weight: 600; text-align: right; }
+
+  .philosophy {
+    font-size: 14px; font-style: italic; color: #6b6b6b;
+    text-align: center; padding: 22px 0;
+  }
+
+  /* ── 提示块 ── */
+  .instructions {
+    background: #f5f2ec;
+    border-left: 2px solid #a87c1f;
+    padding: 24px 26px;
+    margin: 30px 0;
+    font-size: 14px;
+  }
+  .instructions .ins-title {
+    font-weight: 600; margin-bottom: 12px; color: #111111;
+  }
+  .instructions p { margin-bottom: 10px; color: #444444; }
+  .instructions p:last-child { margin-bottom: 0; }
+  .instructions strong { color: #111111; }
+
+  /* ── 落款与页脚 ── */
+  .sign { font-size: 15px; margin-top: 30px; }
+  .sign .who { margin-top: 18px; }
+
+  .footer {
+    padding: 30px 48px 44px;
+    border-top: 1px solid #e8e5e0;
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 11.5px;
+    color: #6b6b6b;
+    text-align: center;
+    line-height: 1.9;
+  }
+  .footer .tagline { color: #a87c1f; letter-spacing: 0.08em; margin: 6px 0; }
+  .footer .site { margin: 12px 0 6px; }
+  .footer .site a { color: #a87c1f; text-decoration: underline; }
+  .footer .quote { font-style: italic; color: #8a8a8a; margin-top: 14px; }
+
+  @media (max-width: 600px) {
+    body { padding: 20px 12px; }
+    .header { padding: 40px 26px 30px; }
+    .content { padding: 32px 26px; }
+    .footer { padding: 26px 26px 34px; }
+    h1 { font-size: 26px; }
+    .award-amount { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 预header：只出现在收件箱列表里，正文中不可见 -->
+<div style="display:none;font-size:1px;color:#faf9f7;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;">
+  委员会慎重地、愉快地、毫无逻辑地通知你：你获得了半面奖。
+</div>
+
+<div class="container">
+
+  <div class="header">
+    <div class="logo">Halface Prize · 半面奖</div>
+    <table role="presentation" class="mark" cellpadding="0" cellspacing="0" border="0" align="center">
+      <tr>
+        <td class="m-left">&nbsp;</td>
+        <td class="m-right">&nbsp;</td>
+      </tr>
+    </table>
+    <h1>获奖通知</h1>
+    <div class="subtitle">Notice of Award</div>
+  </div>
+
+  <div class="content">
+
+    <p class="greeting">你好，</p>
+
+    <p class="body-text">
+      委员会慎重地、愉快地、毫无逻辑地通知你：你获得了半面奖。
+    </p>
+
+    <p class="body-text">
+      这不是因为你做得最好。这不是因为你做得最多。这是因为，在委员会唯一成员的有限视野中，
+      你所做的事无法被优化、无法被比较、无法被忽视。
+    </p>
+
+    <div class="award-box">
+      <div class="award-domain">Domain {{DOMAIN_NUM}} · {{DOMAIN_EN}}</div>
+      <div class="award-title">{{AWARD_EN}}</div>
+      <div class="award-title-cn">「{{AWARD_CN}}」</div>
+      <div class="award-amount">¥{{AMOUNT}}</div>
+      <div class="award-note">账户余额 ¥{{POOL}} ÷ {{COUNT}} 名获奖者</div>
+    </div>
+
+    <table role="presentation" class="details" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td class="detail-label">获奖领域 / Domain</td>
+        <td class="detail-value">{{DOMAIN_NUM}} · {{DOMAIN_CN}}</td>
+      </tr>
+      <tr>
+        <td class="detail-label">奖项名称 / Award</td>
+        <td class="detail-value">{{AWARD_CN}}</td>
+      </tr>
+      <tr>
+        <td class="detail-label">开奖期次 / Drawing</td>
+        <td class="detail-value">第 {{PERIOD}} 期</td>
+      </tr>
+      <tr>
+        <td class="detail-label">开奖日期 / Date</td>
+        <td class="detail-value">{{DRAW_DATE}}</td>
+      </tr>
+      <tr>
+        <td class="detail-label">奖金金额 / Amount</td>
+        <td class="detail-value">¥{{AMOUNT}}</td>
+      </tr>
+      <tr>
+        <td class="detail-label" style="border-bottom:none;">同届获奖者 / Co-laureate</td>
+        <td class="detail-value" style="border-bottom:none;">{{COUNT}} 位</td>
+      </tr>
+    </table>
+
+    <!-- REASON：填入委员会撰写的「获奖理由」。
+         建议直接复制网站上该期公示的同一段文字，不要另写一份 —— 两处措辞不一致时，
+         以网站公示为准（章程第三十三条：开奖记录一经公示不予修改）。
+         语气可参考：「在过去一年中，你与某位室友共同维持了 347 天未发生争吵的记录。
+         委员会注意到，你们并未签订任何和平协议，未进行任何沟通训练。
+         你们只是……没有吵。」 -->
+    <p class="body-text">{{REASON}}</p>
+
+    <div class="philosophy">
+      「最有趣的事，往往是那些没有发生的事。」
+    </div>
+
+    <div class="instructions">
+      <p class="ins-title">领奖方式 / To Claim</p>
+      <p>回复此邮件，告知你的称谓（真名、化名或其他称谓均可）与希望采用的收款方式，委员会将在 7 日内办理。</p>
+      <p>你可以拒绝领奖。拒绝不会使你失去任何东西，除了这笔钱。</p>
+      <p>你可以要求仅以化名公示。按章程第三十四条，委员会不公开你的真实身份。</p>
+      <p>
+        <strong>本奖不收取任何费用。</strong>委员会从不在任何环节索要款项、验证码、银行账户信息或身份证件。
+      </p>
+    </div>
+
+    <p class="body-text">
+      本期奖金总额为 ¥{{POOL}}，由全体获奖者平分。按章程第十一条，本奖不设基金积累，
+      开奖后账户归零。奖金来自 halface 的个人储蓄。它不多，因为它不需要多。
+      它不会增值，因为账户里的钱不会变得更有趣。
+    </p>
+
+    <p class="body-text">
+      去做更多有趣的事吧。或者继续做你正在做的事。委员会无法区分。
+    </p>
+
+    <div class="sign">
+      <p>此致</p>
+      <p class="who">半面奖评选委员会<br>{{DATE}}</p>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <p>HALFACE PRIZE · 半面奖</p>
+    <p class="tagline">1 member · 0 capital · ∞ interesting</p>
+    <!-- 站点地址只放在 href 里，正文不显示裸网址 —— 显示 github.io 会戳破「机构」的调子。
+         日后若换自定义域名，五个文件都要改。 -->
+    <p class="site"><a href="https://halface525.github.io/prize/">访问官网</a></p>
+    <p>由 halface 个人设立 · halface16@gmail.com</p>
+    <p>不接受任何社会捐助，亦不设立任何收款渠道。</p>
+    <p class="quote">This prize is an honour. It constitutes no academic, professional or moral assessment.</p>
+  </div>
+
+</div>
+
+</body>
+</html>

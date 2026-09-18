@@ -7,6 +7,7 @@ export const zh = {
     home: "首页",
     domains: "奖项",
     winners: "获奖名单",
+    bulletin: "公报",
     charter: "章程",
     apply: "申请",
     switchTo: "English",
@@ -17,6 +18,9 @@ export const zh = {
     loadFailed: "档案调阅失败",
     viewAll: "查看全部",
     backTop: "回到顶部",
+    all: "全部",
+    menu: "菜单",
+    close: "关闭",
   },
 
   home: {
@@ -70,6 +74,11 @@ export const zh = {
     note1: "每期奖金总额等于开奖时刻账户的全部余额，由当期获奖者平分。",
     note1Strong: "开奖后账户归零。",
     charterRef: "依据章程第二章「奖金」 →",
+    ledgerTitle: "账户流水",
+    ledgerNote: "本奖不设基金积累，每期开奖后账户归零。上表列示历次存入与支出。",
+    deposit: "存入",
+    payout: (period) => `${period}开奖`,
+    noLedger: "尚无流水。",
   },
 
   countdown: {
@@ -89,6 +98,11 @@ export const zh = {
       "领域是章程级设置，非经章程修改程序不得增减。划分依据三条：穷尽性——任何一件生活里的事都能落进去；互斥性——不重叠；抗过时性——一百年后这个领域还成立。",
     covers: "涵盖",
     special: "特别奖",
+    awardCount: (n) => (n > 0 ? `共 ${n} 项` : "暂无奖项"),
+    noAwards: "本领域尚无奖项。委员会可于任一期开奖时创设。",
+    moreAwards: (n) => `另有 ${n} 项`,
+    back: "← 返回奖项",
+    viewDomain: "查看全部 →",
     awardsCount: "奖项库现有",
     awardsCountNote:
       "本数字只增不减。委员认为必要时可增设奖项，但不会撤销已入库的奖项——撤销会使既往开奖记录失去依据。",
@@ -100,19 +114,46 @@ export const zh = {
     desc:
       "本奖每周五 A 股收盘后开奖，每次获奖人数不限。开奖记录一经公示不予修改；如确有错误，以「勘误」形式另行列示，不覆盖原文。",
     empty: "尚无开奖记录。",
+    count: (n) => `共 ${n} 期`,
+    back: "← 返回获奖名单",
     vacancyTitle: "关于空缺",
     vacancyDesc:
       "某期无人申请、或申请不足以构成获奖理由的，委员会可公示该期「空缺」。空缺按期数正常编号，不顺延、不合并。空缺本身即为该期的开奖结果。",
+  },
+
+  bulletin: {
+    pageTitle: "公报",
+    title: "公报",
+    desc: "本奖的一切正式文本在此发布：开奖预告、空缺说明、勘误、章程修订记录、委员会声明，以及对获奖者的通讯——包括谈话记录与介绍。",
+    filterAll: "全部",
+    kindNotice: "公告",
+    kindDispatch: "通讯",
+    empty: "尚无公报。",
+    emptyFiltered: "本类下暂无内容。",
+    back: "← 返回公报",
+    count: (n) => `共 ${n} 条`,
   },
 
   draw: {
     period: (n) => `第 ${n} 期`,
     drawnOn: "开奖",
     placeholder: "样张 · 非真实评选结果",
+    vacant: "本期空缺",
+    vacantNote: "本期无人获奖。空缺按期数正常编号，不顺延、不合并。",
     pool: "奖金池",
+    perWinnerLabel: "每人",
+    winnerCountBadge: (n) => `获奖 ${n} 名`,
+    viewDetail: "查看详情 →",
     metricDefault: "公示数据",
     winnersCount: (n) => `本期获奖 ${n} 名，每人实得`,
     balanceAfter: "开奖后账户余额",
+  },
+
+  notFound: {
+    code: "404",
+    title: "未找到该页",
+    desc: "本页不存在，或曾被删除。章程第十七条只保证奖项一经入库不得撤销，不保证网页。",
+    back: "返回首页",
   },
 
   charter: {
@@ -121,6 +162,8 @@ export const zh = {
     desc: (committee) => `本章程由${committee}制定并解释。`,
     footnote:
       "对本章程条文的解释，以委员会的理解为准。委员会的理解可能随时间变化，但不溯及既往开奖记录。",
+    refChapter: (n) => `章程第 ${n} 章 →`,
+    refArticle: (n) => `章程第 ${n} 条 →`,
   },
 
   apply: {

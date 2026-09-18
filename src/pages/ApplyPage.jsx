@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { Link } from "react-router";
 import { SectionHeading } from "../components/SectionHeading";
 import { GoldButton } from "../components/GoldButton";
 import { MarkdownBody } from "../components/MarkdownBody";
 import { site } from "../data/site";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { useI18n } from "../i18n";
+import { charterLink, charterRefClass } from "../utils/charter";
 
 export function ApplyPage() {
   const { t } = useI18n();
@@ -88,6 +90,13 @@ export function ApplyPage() {
             <strong className="font-semibold text-[var(--ink)]">{t.apply.noDonationStrong}</strong>
             {t.apply.noDonationAfter}
           </p>
+          <Link
+            to={charterLink.article(8)}
+            className={`${charterRefClass} mt-4 inline-block`}
+            style={{ color: "var(--gold)" }}
+          >
+            {t.charter.refArticle(8)}
+          </Link>
         </div>
       </section>
     </div>

@@ -7,6 +7,7 @@ export const en = {
     home: "Home",
     domains: "Prizes",
     winners: "Laureates",
+    bulletin: "Gazette",
     charter: "Charter",
     apply: "Apply",
     switchTo: "中文",
@@ -17,6 +18,9 @@ export const en = {
     loadFailed: "Failed to retrieve the record",
     viewAll: "View all",
     backTop: "Back to top",
+    all: "All",
+    menu: "Menu",
+    close: "Close",
   },
 
   home: {
@@ -72,6 +76,12 @@ The Committee holds that interesting is the one quality that cannot be optimised
       "The total prize for each drawing equals the entire balance of the account at the moment of the drawing, divided equally among that drawing's laureates.",
     note1Strong: "The account returns to zero after every drawing.",
     charterRef: "Under Chapter 2 of the Charter, “The Prize” →",
+    ledgerTitle: "Account ledger",
+    ledgerNote:
+      "The Prize accumulates no capital; the account returns to zero after every drawing. Every deposit and every payout is listed above.",
+    deposit: "Deposit",
+    payout: (period) => `Paid out · ${period}`,
+    noLedger: "No entries yet.",
   },
 
   countdown: {
@@ -91,6 +101,12 @@ The Committee holds that interesting is the one quality that cannot be optimised
       "The domains are set at the level of the Charter. They are drawn on three criteria: exhaustiveness — anything in a life can be placed somewhere; mutual exclusivity — no overlap; and resistance to obsolescence — the domain still holds a hundred years from now.",
     covers: "Covers",
     special: "Special Prize",
+    awardCount: (n) => (n > 0 ? `${n} award${n === 1 ? "" : "s"}` : "No awards yet"),
+    noAwards:
+      "No award exists in this domain yet. The Committee may create one at any drawing.",
+    moreAwards: (n) => `${n} more`,
+    back: "← Back to the Prizes",
+    viewDomain: "View all →",
     awardsCount: "Awards in the library",
     awardsCountNote:
       "This number only rises. The Committee may create awards as it sees fit, but never withdraws one already in the library — withdrawal would leave past drawings without foundation.",
@@ -102,19 +118,47 @@ The Committee holds that interesting is the one quality that cannot be optimised
     desc:
       "The prize is drawn every Friday after the A-share market closes, with no limit on the number of laureates. A published record is not amended; where an error has genuinely occurred it is listed separately as an erratum, without overwriting the original.",
     empty: "No drawings on record yet.",
+    count: (n) => `${n} drawing${n === 1 ? "" : "s"}`,
+    back: "← Back to the Laureates",
     vacancyTitle: "On vacancies",
     vacancyDesc:
       "Where a drawing receives no application, or none sufficient to constitute grounds for an award, the Committee may declare that drawing “vacant.” A vacancy is numbered in sequence and is neither postponed nor merged. The vacancy is itself the result of that drawing.",
+  },
+
+  bulletin: {
+    pageTitle: "Gazette",
+    title: "Gazette",
+    desc: "Every formal text of the Prize is published here: notices of forthcoming drawings, declarations of vacancy, errata, records of amendments to the Charter, statements of the Committee, and dispatches on laureates — conversations and profiles alike.",
+    filterAll: "All",
+    kindNotice: "Notices",
+    kindDispatch: "Dispatches",
+    empty: "Nothing published yet.",
+    emptyFiltered: "Nothing of this kind yet.",
+    back: "← Back to the Gazette",
+    count: (n) => `${n} item${n === 1 ? "" : "s"}`,
   },
 
   draw: {
     period: (n) => `No. ${n}`,
     drawnOn: "drawn",
     placeholder: "SAMPLE · not a real result",
+    vacant: "Vacant",
+    vacantNote:
+      "No laureate this drawing. A vacancy is numbered in sequence and is neither postponed nor merged.",
     pool: "Prize pool",
+    perWinnerLabel: "each",
+    winnerCountBadge: (n) => `${n} laureate${n === 1 ? "" : "s"}`,
+    viewDetail: "View record →",
     metricDefault: "Published figure",
     winnersCount: (n) => `${n} laureate${n === 1 ? "" : "s"} this drawing · each receives`,
     balanceAfter: "Balance after the drawing",
+  },
+
+  notFound: {
+    code: "404",
+    title: "Page not found",
+    desc: "This page does not exist, or has been removed. Article 17 guarantees only that an award, once in the library, may not be withdrawn. It says nothing about web pages.",
+    back: "Back to the front page",
   },
 
   charter: {
@@ -123,6 +167,8 @@ The Committee holds that interesting is the one quality that cannot be optimised
     desc: (committee) => `This Charter is made and construed by the ${committee}.`,
     footnote:
       "The interpretation of these articles rests with the Committee. The Committee's understanding may change over time, but never retroactively as to drawings already published.",
+    refChapter: (n) => `Charter, Chapter ${n} →`,
+    refArticle: (n) => `Charter, Article ${n} →`,
   },
 
   apply: {

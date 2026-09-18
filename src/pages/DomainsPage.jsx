@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { SectionHeading } from "../components/SectionHeading";
 import { DomainCard } from "../components/DomainCard";
 import { MarkdownBody } from "../components/MarkdownBody";
@@ -5,6 +6,7 @@ import { domains } from "../data/domains";
 import { awards } from "../data/awards";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { useI18n } from "../i18n";
+import { charterLink, charterRefClass } from "../utils/charter";
 
 /** 页尾说明，中英各一份 */
 const ABOUT = {
@@ -46,7 +48,7 @@ export function DomainsPage() {
 
       <div className="mt-10 space-y-4">
         {domains.map((d) => (
-          <DomainCard key={d.id} domain={d} expanded />
+          <DomainCard key={d.id} domain={d} />
         ))}
       </div>
 
@@ -63,9 +65,18 @@ export function DomainsPage() {
             <div className="eyebrow">{t.domains.awardsCount}</div>
             <div className="figure mt-2 text-4xl leading-none">{awards.length}</div>
           </div>
-          <p className="max-w-md text-[13px] leading-relaxed text-[var(--muted)]">
-            {t.domains.awardsCountNote}
-          </p>
+          <div className="max-w-md">
+            <p className="text-[13px] leading-relaxed text-[var(--muted)]">
+              {t.domains.awardsCountNote}
+            </p>
+            <Link
+              to={charterLink.article(17)}
+              className={`${charterRefClass} mt-3 inline-block`}
+              style={{ color: "var(--gold)" }}
+            >
+              {t.charter.refArticle(17)}
+            </Link>
+          </div>
         </div>
       </section>
     </div>

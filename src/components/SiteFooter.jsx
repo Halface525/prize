@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { navItems, site } from "../data/site";
+import { footerItems, site } from "../data/site";
 import { useI18n } from "../i18n";
 
 export function SiteFooter() {
@@ -28,7 +28,7 @@ export function SiteFooter() {
                 {t.footer.menu}
               </div>
               <ul className="space-y-2.5">
-                {navItems.map((item) => (
+                {footerItems.map((item) => (
                   <li key={item.id}>
                     <Link
                       to={item.path}

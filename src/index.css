@@ -140,6 +140,18 @@ body {
   pointer-events: none;
 }
 
+/* 隐藏滚动条但保留滚动能力。导航栏用它兜底：
+   万一标签比预算的宽（字体没加载出来、以后又加了导航项），
+   也只是变成可横向滚动，而不是把胶囊撑破。 */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /* ===== 小标签 ===== */
 .eyebrow {
   font-family: "Inter", sans-serif;
@@ -187,6 +199,12 @@ body {
 .charter-body {
   font-size: 1rem;
   line-height: 2;
+}
+
+/* 章程的章、条锚点。滚动时给悬浮胶囊导航留出高度，
+   否则跳过去会被导航条盖住标题。 */
+.anchor-target {
+  scroll-margin-top: 110px;
 }
 
 .charter-body h2 {

@@ -1,50 +1,73 @@
+import { useState } from "react";
+import { Link } from "react-router";
 import { SectionHeading } from "../components/SectionHeading";
-import { DrawRecord } from "../components/DrawRecord";
-import { sortedDraws } from "../data/draws";
-import { useArticle } from "../hooks/useArticle";
+import { DrawCard } from "../components/DrawCard";
+import { drawsByDomain, domainsWithLaureates } from "../data/draws";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
-import { useI18n, localizedPath } from "../i18n";
-
-/** 单期记录：各自拉取自己语言的 markdown */
-function DrawItem({ draw }) {
-  const { lang } = useI18n();
-  const { data, loading, error } = useArticle(localizedPath(draw.file, lang));
-
-  return (
-    <DrawRecord
-      draw={draw}
-      metadata={data?.metadata}
-      content={data?.content}
-      loading={loading}
-      error={error}
-    />
-  );
-}
+import { useI18n, pick } from "../i18n";
+import { charterLink, charterRefClass } from "../utils/charter";
 
 export function WinnersPage() {
-  const { t } = useI18n();
+  const { lang, t } = useI18n();
   useDocumentTitle(t.winners.pageTitle);
-  const list = sortedDraws();
+
+  const [domainId, setDomainId] = useState(null);
+  const list = drawsByDomain(domainId);
+
+  // 只列出「出过获奖者」的领域——八个领域全列出来会有大半是空的
+  const filterDomains = domainsWithLaureates();
+  const tabs = [
+    { id: null, label: t.common.all },
+    ...filterDomains.map((d) => ({ id: d.id, label: pick(d, "name", lang) })),
+  ];
 
   return (
-    <div className="mx-auto max-w-5xl px-6">
+    <div className="mx-auto max-w-3xl px-6">
       <SectionHeading
         eyebrow={t.nav.winners}
         title={t.winners.title}
         description={t.winners.desc}
       />
 
-      {list.length === 0 ? (
+      {list.length === 0 && !domainId ? (
         <p className="mt-12 text-center text-sm text-[var(--muted)]">{t.winners.empty}</p>
       ) : (
-        <div className="mt-10 space-y-10">
-          {list.map((draw) => (
-            <DrawItem key={draw.id} draw={draw} />
-          ))}
-        </div>
+        <>
+          <div className="mt-8 flex flex-wrap items-center gap-2">
+            {/* 只有一个领域出过获奖者时不必显示筛选 */}
+            {filterDomains.length > 1 &&
+              tabs.map((tab) => {
+                const active = domainId === tab.id;
+                return (
+                  <button
+                    key={tab.id ?? "all"}
+                    type="button"
+                    onClick={() => setDomainId(tab.id)}
+                    className="font-sans rounded-full border px-3.5 py-1.5 text-[12px] transition-colors"
+                    style={{
+                      borderColor: active ? "var(--ink)" : "var(--line)",
+                      background: active ? "var(--ink)" : "transparent",
+                      color: active ? "var(--paper)" : "var(--muted)",
+                    }}
+                  >
+                    {tab.label}
+                  </button>
+                );
+              })}
+            <span className="font-sans ml-auto text-[11px] text-[var(--muted)]">
+              {t.winners.count(list.length)}
+            </span>
+          </div>
+
+          <div className="mt-5 space-y-4">
+            {list.map((draw) => (
+              <DrawCard key={draw.id} draw={draw} />
+            ))}
+          </div>
+        </>
       )}
 
-      <section className="mt-16">
+      <section className="mt-14">
         <div
           className="rounded-2xl border px-6 py-8"
           style={{ borderColor: "var(--line)", background: "var(--cream)" }}
@@ -53,6 +76,13 @@ export function WinnersPage() {
           <p className="mt-3 text-[14px] leading-relaxed text-[var(--muted)]">
             {t.winners.vacancyDesc}
           </p>
+          <Link
+            to={charterLink.article(29)}
+            className={`${charterRefClass} mt-4 inline-block`}
+            style={{ color: "var(--gold)" }}
+          >
+            {t.charter.refArticle(29)}
+          </Link>
         </div>
       </section>
     </div>

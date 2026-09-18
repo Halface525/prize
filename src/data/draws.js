@@ -1,12 +1,19 @@
+// 显式写 .js 扩展名：Vite 不要求，但 Node 的 ESM 解析器要求。
+// 数据层保持「纯 JS、可被 Node 直接 import」，才能脱离构建单独跑校验脚本。
+import { domains } from "./domains.js";
+
 /**
- * 开奖记录索引。
+ * 开奖记录。
  *
- * 每周开奖只需两步：
- *   1. 在 public/content/draws/ 下新增一个 <日期>.md（frontmatter 存结构化数据，
- *      正文写「获奖理由」，用公文腔）
- *   2. 在本数组最前面加一行
+ * 元数据（期次、日期、奖金、获奖人）全部放在这里，markdown 只写正文——「获奖理由」。
+ * 这么分是因为列表页要显示获奖人，若获奖人放在 markdown 的 frontmatter 里，
+ * 列表页就得把每一期的 md 都拉一遍；期数一多就废了。
+ * 公报（src/data/bulletin.js）用的是同一套存法。
  *
- * 其余字段（获奖人、领域、奖金）都在 markdown 的 frontmatter 里，不重复维护。
+ * 新增一期：
+ *   1. 在 public/content/draws/ 下加 <日期>.md 和 <日期>.en.md（正文，无需 frontmatter）
+ *   2. 在本数组最前面加一项
+ *   3. 改 src/data/fund.js 的 balance —— 开奖后归零（章程第十一条）
  */
 
 export const draws = [
@@ -14,18 +21,78 @@ export const draws = [
     id: "2026-09-18",
     period: 1,
     date: "2026-09-18",
-    file: "content/draws/2026-09-18.md",
     // 样张：内容为格式示范，不是真实评选结果。页面上会打「样张」标记。
     placeholder: true,
+
+    pool: 1247.3,
+    perWinner: 623.65,
+    balanceAfter: 0,
+
+    file: "content/draws/2026-09-18.md",
+
+    // 无人获奖（空缺）时留空数组即可，卡片和详情页都会显示「本期空缺」。
+    //
+    // domainId 必须是 domains.js 里的 id——这是外键，不是显示文本，
+    // 领域名由 domains.js 提供。别在这里硬编码中文领域名，改个名历史记录就烂了。
+    // award 则相反，是当时实际授予的奖项名，照实记录（章程第三十三条：记录不予修改）。
+    winners: [
+      {
+        name: "不愿具名者",
+        nameEn: "A person who prefers not to be named",
+        domainId: "labor",
+        award: "最低人工智能依赖奖",
+        awardEn: "Least Reliance on AI Prize",
+        metricLabel: "AI 使用率",
+        metricLabelEn: "Rate of AI use",
+        metric: "0%",
+      },
+      {
+        name: "图书馆三楼靠窗的猫",
+        nameEn: "The cat by the window on the third floor of the library",
+        domainId: "nonhuman",
+        award: "校园猫全勤奖",
+        awardEn: "Perfect Attendance Prize, Campus Cat",
+        metricLabel: "出现天数",
+        metricLabelEn: "Days present",
+        metric: "187",
+      },
+    ],
   },
 ];
 
-/** 最近一期 */
-export function latestDraw() {
-  return draws[0] ?? null;
-}
-
-/** 按期号倒序 */
+/** 按期号倒序（最新的在前） */
 export function sortedDraws() {
   return [...draws].sort((a, b) => b.period - a.period);
+}
+
+/** 最近一期 */
+export function latestDraw() {
+  return sortedDraws()[0] ?? null;
+}
+
+/** 按 id 取一期 */
+export function getDraw(id) {
+  return draws.find((d) => d.id === id);
+}
+
+/** 获奖人数 */
+export function winnerCount(draw) {
+  return Array.isArray(draw?.winners) ? draw.winners.length : 0;
+}
+
+/** 出过获奖者的领域（按 domains.js 的顺序），给筛选按钮用 */
+export function domainsWithLaureates() {
+  const ids = new Set();
+  for (const d of draws) {
+    for (const w of d.winners ?? []) {
+      if (w.domainId) ids.add(w.domainId);
+    }
+  }
+  return domains.filter((d) => ids.has(d.id));
+}
+
+/** 按领域筛选开奖记录。domainId 为 null 时返回全部。 */
+export function drawsByDomain(domainId = null) {
+  if (!domainId) return sortedDraws();
+  return sortedDraws().filter((d) => (d.winners ?? []).some((w) => w.domainId === domainId));
 }

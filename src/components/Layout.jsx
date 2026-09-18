@@ -4,12 +4,14 @@ import { PillNav } from "./PillNav";
 import { SiteFooter } from "./SiteFooter";
 
 export function Layout({ children }) {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
-  // 路由切换后回到顶部
+  // 路由切换后回到顶部。带锚点时例外——那时由页面自己滚到锚点，
+  // 这里再滚一次会把锚点顶掉。
   useEffect(() => {
+    if (hash) return;
     window.scrollTo(0, 0);
-  }, [pathname]);
+  }, [pathname, hash]);
 
   return (
     <div className="flex min-h-screen flex-col">
