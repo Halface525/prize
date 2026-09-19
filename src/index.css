@@ -13,6 +13,15 @@
   --font-display: "Playfair Display", "Noto Serif SC", serif;
   --font-body: "Noto Serif SC", "Source Han Serif SC", serif;
   --font-sans: "Inter", sans-serif;
+
+  /* 正文层字号整体上调 1px。
+     原因是中文：汉字在 12–13px 下比拉丁字母吃力得多，笔画会糊在一起。
+     标题层（text-xl 以上）不动 —— 它们本来就够大，动了只会改变整站版面比例。
+
+     text-sm 默认 14px，这里跟着提到 15px，与 text-[15px] 对齐。
+     这两处必须一起改：只改任意值、不改 text-sm，站上会同时存在 14 和 15 两种正文。 */
+  --text-sm: 0.9375rem;
+  --text-sm--line-height: 1.5rem;
 }
 
 :root {
@@ -46,20 +55,103 @@ body {
   font-family: "Inter", sans-serif;
 }
 
-/* ===== 悬浮胶囊导航 ===== */
+/* ===== 悬浮胶囊导航 =====
+   顶部：无外壳，和页面融为一体
+   滚动后：外壳淡入
+
+   宽度形变只在宽屏做。1140px 以下胶囊本来就是「通栏减 40px」，
+   收缩空间只有 20px —— 那不读作形变，读作抖了一下。
+   窄屏就老老实实只淡入外壳。分界线取 1140px 是因为
+   min(1100px, 100% - 40px) 在那里换挡。
+
+   形变是「宽度」动画，会触发布局。所以只能阈值触发 + 一次性过渡，
+   不能跟滚动位置绑定 —— 那样每一帧都要重新布局，必卡。
+   阈值与迟滞在 PillNav.jsx 里。 */
 .pill-nav {
   position: fixed;
   top: 18px;
   left: 50%;
   transform: translateX(-50%);
-  width: min(1100px, calc(100% - 40px));
   z-index: 100;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--line);
+
+  /* 窄屏：宽度与圆角恒定，就是胶囊本身。is-scrolled 不碰这两个属性，
+     所以宽度／圆角过渡根本不会触发 —— 只有外壳在淡入。 */
+  width: calc(100% - 40px);
+  border: 1px solid transparent; /* 宽度恒定，只动颜色 —— 否则胶囊会在阈值处弹跳 2px */
   border-radius: 999px;
+
+  background-color: transparent;
+  box-shadow: none;
+  /* 用 blur(0px) 而不是 none：none 无法参与插值，模糊会直接跳变。
+     只写无前缀版本 —— 手写 -webkit- 会让构建时的 lightningcss
+     认为「已手动处理过前缀」，于是把无前缀那条删掉，火狐就没模糊了。 */
+  backdrop-filter: blur(0px);
+
+  transition:
+    width 320ms cubic-bezier(0.22, 0.9, 0.35, 1),
+    border-radius 320ms cubic-bezier(0.22, 0.9, 0.35, 1),
+    background-color 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease,
+    backdrop-filter 200ms ease;
+}
+
+/* 宽屏：顶部通栏、方角；滚动后两端收进来，圆角从方到圆。
+   1100px 是写死的胶囊宽度（不是 min()，因为 min() 无法参与过渡插值）。 */
+@media (min-width: 1140px) {
+  .pill-nav {
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .pill-nav.is-scrolled {
+    width: 1100px;
+  }
+}
+
+/* 外壳。窄屏宽屏共用 —— 这是两个断点下唯一都会变的东西。 */
+.pill-nav.is-scrolled {
+  border-color: var(--line);
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.85);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(16px);
+}
+
+/* 内层左右留白。
+   窄屏恒定（用胶囊状态的数值），跟宽度一样不动 —— 否则内容会平移，
+   那又变成「抖了一下」。
+   宽屏才做「页面留白 → 胶囊边缘」的收拢。 */
+.nav-inner {
+  padding-left: 12px;
+  padding-right: 12px;
+  transition: padding 320ms cubic-bezier(0.22, 0.9, 0.35, 1);
+}
+
+@media (min-width: 640px) {
+  .nav-inner {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (min-width: 1140px) {
+  .nav-inner {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  .pill-nav.is-scrolled .nav-inner {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pill-nav,
+  .nav-inner {
+    transition: none;
+  }
 }
 
 /* ===== 金色胶囊按钮 ===== */
@@ -73,7 +165,7 @@ body {
   border-radius: 999px;
   padding: 0.7rem 1.6rem;
   font-family: "Inter", sans-serif;
-  font-size: 0.8rem;
+  font-size: 0.875rem;
   font-weight: 500;
   letter-spacing: 0.04em;
   transition: background 0.25s ease, transform 0.25s ease;
@@ -86,26 +178,31 @@ body {
   transform: translateY(-1px);
 }
 
+/* 次级按钮。
+   描边**不能用 --line** —— 那是给分隔线用的浅灰，压在米色卡片上对比度只有 1.12:1，
+   等于没有边框，按钮就只剩几个字浮着（首页 hero 里的「阅读章程」踩过这个）。
+   用藏青：一是 11.8:1 达标，二是跟金色实心主按钮凑成一对主题色。 */
 .btn-ghost {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   background: transparent;
-  color: var(--ink);
-  border: 1px solid var(--line);
+  color: var(--navy);
+  border: 1px solid var(--navy);
   border-radius: 999px;
   padding: 0.7rem 1.6rem;
   font-family: "Inter", sans-serif;
-  font-size: 0.8rem;
+  font-size: 0.875rem;
   font-weight: 500;
   letter-spacing: 0.04em;
-  transition: border-color 0.25s ease, color 0.25s ease;
+  transition: background-color 0.25s ease, color 0.25s ease;
   cursor: pointer;
 }
 
 .btn-ghost:hover {
-  border-color: var(--ink);
+  background: var(--navy);
+  color: var(--paper);
 }
 
 /* ===== 大圆角 hero 卡片 ===== */
@@ -155,7 +252,7 @@ body {
 /* ===== 小标签 ===== */
 .eyebrow {
   font-family: "Inter", sans-serif;
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -195,6 +292,22 @@ body {
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.06);
 }
 
+/* ===== 区块标题 =====
+   开奖详情页的两段（获奖者 / 获奖理由）用这个。
+
+   不要用 .eyebrow —— 那套是给拉丁大写标签设计的（小字号、字距 0.22em、
+   text-transform: uppercase），套在「获奖理由」四个汉字上就又小又散，
+   uppercase 对汉字也毫无作用。
+
+   与 .charter-body h2/h3 同一套语言：衬线、加粗、配一道细线。 */
+.section-rule {
+  font-family: "Playfair Display", "Noto Serif SC", serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--line);
+}
+
 /* ===== 章程 / 公文排版 ===== */
 .charter-body {
   font-size: 1rem;
@@ -224,10 +337,21 @@ body {
 
 .charter-body h3 {
   font-family: "Playfair Display", "Noto Serif SC", serif;
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-top: 2rem;
-  margin-bottom: 0.75rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+/* markdown 里的小标题（如「### 委员会备注」）前面必定有正文，
+   所以用**上**划线把它跟正文分开 —— 这是「委员会备注」和
+   「获奖理由」读起来分不清的原因：只有空白，没有线。
+   React 渲染的 .section-rule 用下划线，因为它是「起一段」；
+   两处方向不同是刻意的，各司其职。
+   :not(:first-child) 是防 markdown 一开头就是小标题时多出一道悬空的线。 */
+.charter-body h3:not(:first-child) {
+  margin-top: 3rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--line);
 }
 
 .charter-body p {
@@ -277,7 +401,7 @@ body {
   width: 100%;
   border-collapse: collapse;
   margin: 1.75rem 0;
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
 }
 
 .charter-body th,
@@ -308,7 +432,7 @@ body {
   overflow-x: auto;
   margin: 1.75rem 0;
   font-family: Menlo, Monaco, monospace;
-  font-size: 0.82rem;
+  font-size: 0.875rem;
   line-height: 1.75;
 }
 

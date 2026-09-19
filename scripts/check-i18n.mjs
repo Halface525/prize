@@ -98,14 +98,30 @@ for (const k of ["days", "hours", "minutes", "seconds"]) {
   report(Boolean(zh.countdown[k] && en.countdown[k]), `t.countdown['${k}']`);
 }
 
-// ── 4. 该是函数的是不是函数 ────────────────────────
-console.log("\n=== 四、参数化的文案必须是函数 ===");
-for (const path of ["draw.period", "draw.winnersCount", "domains.awardCount", "winners.count", "charter.refArticle", "charter.refChapter", "fund.payout", "bulletin.count", "footer.meta", "charter.desc"]) {
-  const [s, k] = path.split(".");
-  report(
-    typeof zh[s]?.[k] === "function" && typeof en[s]?.[k] === "function",
-    `t.${path}()`
-  );
+// ── 4. 被当函数调用的，必须是函数 ──────────────────
+// 从源码里扫 `t.x.y(` 的写法，而不是维护一份手写清单 ——
+// 清单会随 key 增删而过期（删掉 fund.payout 时就踩过一次，
+// 报了个假 FAIL）。
+console.log("\n=== 四、被当函数调用的文案必须是函数 ===");
+const called = new Map();
+for (const f of files) {
+  const src = readFileSync(f, "utf8");
+  for (const m of src.matchAll(/\bt\.([a-zA-Z]\w*)\.([a-zA-Z]\w*)\s*\(/g)) {
+    const k = `${m[1]}.${m[2]}`;
+    if (!called.has(k)) called.set(k, new Set());
+    called.get(k).add(relative(ROOT, f));
+  }
+}
+
+if (called.size === 0) {
+  console.log("ok    源码里没有以函数形式调用的文案");
+} else {
+  for (const [k, where] of called) {
+    const [s, key] = k.split(".");
+    const ok = typeof zh[s]?.[key] === "function" && typeof en[s]?.[key] === "function";
+    report(ok, `t.${k}()`);
+    if (!ok) for (const w of where) console.log(`        ${w}`);
+  }
 }
 
 console.log(`\n${problems === 0 ? "全部通过" : `${problems} 项失败`}`);

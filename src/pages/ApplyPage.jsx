@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import { SectionHeading } from "../components/SectionHeading";
+import { Ribbon } from "../components/Ribbon";
 import { GoldButton } from "../components/GoldButton";
 import { MarkdownBody } from "../components/MarkdownBody";
 import { site } from "../data/site";
@@ -33,19 +34,22 @@ export function ApplyPage() {
 
       {/* 邮箱 */}
       <div
-        className="mt-10 rounded-2xl border px-6 py-8 text-center"
+        className="relative mt-10 overflow-hidden rounded-2xl border px-6 py-8 text-center"
         style={{ borderColor: "var(--line)", background: "var(--cream)" }}
       >
-        <div className="eyebrow">{t.apply.emailLabel}</div>
-        <a
-          href={mailto}
-          className="font-sans mt-3 block text-lg tracking-wide transition-opacity hover:opacity-70 sm:text-xl"
-          style={{ color: "var(--gold)" }}
-        >
-          {site.email}
-        </a>
-        <div className="mt-6">
-          <GoldButton href={mailto}>{t.apply.openMail}</GoldButton>
+        <Ribbon />
+        <div className="relative">
+          <div className="eyebrow">{t.apply.emailLabel}</div>
+          <a
+            href={mailto}
+            className="font-sans mt-3 block text-lg tracking-wide transition-opacity hover:opacity-70 sm:text-xl"
+            style={{ color: "var(--gold)" }}
+          >
+            {site.email}
+          </a>
+          <div className="mt-6">
+            <GoldButton href={mailto}>{t.apply.openMail}</GoldButton>
+          </div>
         </div>
       </div>
 
@@ -62,13 +66,13 @@ export function ApplyPage() {
         </div>
 
         <pre
-          className="mt-6 overflow-x-auto whitespace-pre-wrap rounded-2xl border px-6 py-6 text-[13px] leading-[1.9]"
+          className="mt-6 overflow-x-auto whitespace-pre-wrap rounded-2xl border px-6 py-6 text-[14px] leading-[1.9]"
           style={{ borderColor: "var(--line)", background: "var(--cream)", fontFamily: "inherit" }}
         >
           {t.emailTemplate}
         </pre>
 
-        <p className="mt-4 text-[13px] leading-relaxed text-[var(--muted)]">
+        <p className="mt-4 text-[14px] leading-relaxed text-[var(--muted)]">
           {t.apply.templateNote}
         </p>
       </section>
@@ -85,7 +89,7 @@ export function ApplyPage() {
           style={{ borderColor: "var(--line)", background: "var(--cream)" }}
         >
           <h3 className="font-display text-lg font-bold">{t.apply.noDonationTitle}</h3>
-          <p className="mt-3 text-[13px] leading-relaxed text-[var(--muted)]">
+          <p className="mt-3 text-[14px] leading-relaxed text-[var(--muted)]">
             {t.apply.noDonationBefore}
             <strong className="font-semibold text-[var(--ink)]">{t.apply.noDonationStrong}</strong>
             {t.apply.noDonationAfter}

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router";
 import { SectionHeading } from "../components/SectionHeading";
 import { DrawCard } from "../components/DrawCard";
+import { EmptyState } from "../components/EmptyState";
 import { drawsByDomain, domainsWithLaureates } from "../data/draws";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { useI18n, pick } from "../i18n";
@@ -30,7 +31,7 @@ export function WinnersPage() {
       />
 
       {list.length === 0 && !domainId ? (
-        <p className="mt-12 text-center text-sm text-[var(--muted)]">{t.winners.empty}</p>
+        <EmptyState className="mt-10" text={t.winners.empty} />
       ) : (
         <>
           <div className="mt-8 flex flex-wrap items-center gap-2">
@@ -43,7 +44,7 @@ export function WinnersPage() {
                     key={tab.id ?? "all"}
                     type="button"
                     onClick={() => setDomainId(tab.id)}
-                    className="font-sans rounded-full border px-3.5 py-1.5 text-[12px] transition-colors"
+                    className="font-sans rounded-full border px-3.5 py-1.5 text-[13px] transition-colors"
                     style={{
                       borderColor: active ? "var(--ink)" : "var(--line)",
                       background: active ? "var(--ink)" : "transparent",
@@ -54,7 +55,7 @@ export function WinnersPage() {
                   </button>
                 );
               })}
-            <span className="font-sans ml-auto text-[11px] text-[var(--muted)]">
+            <span className="font-sans ml-auto text-[12px] text-[var(--muted)]">
               {t.winners.count(list.length)}
             </span>
           </div>
@@ -73,7 +74,7 @@ export function WinnersPage() {
           style={{ borderColor: "var(--line)", background: "var(--cream)" }}
         >
           <h3 className="font-display text-xl font-bold">{t.winners.vacancyTitle}</h3>
-          <p className="mt-3 text-[14px] leading-relaxed text-[var(--muted)]">
+          <p className="mt-3 text-[15px] leading-relaxed text-[var(--muted)]">
             {t.winners.vacancyDesc}
           </p>
           <Link

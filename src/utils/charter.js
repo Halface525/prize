@@ -16,4 +16,4 @@ export const charterLink = {
 
 /** 页面里「依据章程第X条 →」那种小链接的统一写法 */
 export const charterRefClass =
-  "font-sans text-[12px] transition-opacity hover:opacity-60";
+  "font-sans text-[13px] transition-opacity hover:opacity-60";

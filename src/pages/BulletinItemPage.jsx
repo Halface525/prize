@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router";
 import { MarkdownBody } from "../components/MarkdownBody";
+import { EmptyState } from "../components/EmptyState";
 import { getBulletin } from "../data/bulletin";
 import { useArticle } from "../hooks/useArticle";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
@@ -19,15 +20,16 @@ export function BulletinItemPage() {
 
   if (!item) {
     return (
-      <div className="mx-auto max-w-3xl px-6 py-20 text-center">
-        <p className="text-sm text-[var(--muted)]">{t.bulletin.empty}</p>
-        <Link
-          to="/bulletin"
-          className="font-sans mt-6 inline-block text-[12px] transition-opacity hover:opacity-60"
-          style={{ color: "var(--gold)" }}
-        >
-          {t.bulletin.back}
-        </Link>
+      <div className="mx-auto max-w-3xl px-6 py-16">
+        <EmptyState text={t.bulletin.empty}>
+          <Link
+            to="/bulletin"
+            className="font-sans text-[13px] transition-opacity hover:opacity-60"
+            style={{ color: "var(--gold)" }}
+          >
+            {t.bulletin.back}
+          </Link>
+        </EmptyState>
       </div>
     );
   }
@@ -36,7 +38,7 @@ export function BulletinItemPage() {
     <div className="mx-auto max-w-3xl px-6">
       <Link
         to="/bulletin"
-        className="font-sans text-[12px] transition-opacity hover:opacity-60"
+        className="font-sans text-[13px] transition-opacity hover:opacity-60"
         style={{ color: "var(--gold)" }}
       >
         {t.bulletin.back}
@@ -45,7 +47,7 @@ export function BulletinItemPage() {
       <header className="mt-8 border-b pb-7" style={{ borderColor: "var(--line)" }}>
         <div className="flex flex-wrap items-center gap-3">
           <span
-            className="font-sans rounded-full px-2.5 py-1 text-[10px] tracking-wide"
+            className="font-sans rounded-full px-2.5 py-1 text-[11px] tracking-wide"
             style={{
               background: item.kind === "interview" ? "var(--gold)" : "var(--cream)",
               color: item.kind === "interview" ? "#fff" : "var(--muted)",
@@ -53,7 +55,7 @@ export function BulletinItemPage() {
           >
             {t.bulletin[KIND_LABEL_KEY[item.kind]]}
           </span>
-          <span className="font-sans text-[12px] text-[var(--muted)]">
+          <span className="font-sans text-[13px] text-[var(--muted)]">
             {formatDate(item.date, lang)}
           </span>
         </div>

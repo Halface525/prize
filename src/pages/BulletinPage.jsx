@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import { SectionHeading } from "../components/SectionHeading";
+import { EmptyState } from "../components/EmptyState";
 import { sortedBulletins, BULLETIN_KINDS } from "../data/bulletin";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { useI18n, pick } from "../i18n";
@@ -37,7 +38,7 @@ export function BulletinPage() {
               key={tab.key ?? "all"}
               type="button"
               onClick={() => setFilter(tab.key)}
-              className="font-sans rounded-full border px-3.5 py-1.5 text-[12px] transition-colors"
+              className="font-sans rounded-full border px-3.5 py-1.5 text-[13px] transition-colors"
               style={{
                 borderColor: active ? "var(--ink)" : "var(--line)",
                 background: active ? "var(--ink)" : "transparent",
@@ -48,16 +49,17 @@ export function BulletinPage() {
             </button>
           );
         })}
-        <span className="font-sans ml-auto text-[11px] text-[var(--muted)]">
+        <span className="font-sans ml-auto text-[12px] text-[var(--muted)]">
           {t.bulletin.count(list.length)}
         </span>
       </div>
 
       {/* 列表 */}
       {list.length === 0 ? (
-        <p className="py-16 text-center text-sm text-[var(--muted)]">
-          {filter ? t.bulletin.emptyFiltered : t.bulletin.empty}
-        </p>
+        <EmptyState
+          className="mt-8"
+          text={filter ? t.bulletin.emptyFiltered : t.bulletin.empty}
+        />
       ) : (
         <ul className="mt-8">
           {list.map((b) => (
@@ -72,7 +74,7 @@ export function BulletinPage() {
               >
                 <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1.5">
                   <span
-                    className="font-sans rounded-full px-2 py-0.5 text-[10px] tracking-wide"
+                    className="font-sans rounded-full px-2 py-0.5 text-[11px] tracking-wide"
                     style={{
                       background: b.kind === "interview" ? "var(--gold)" : "var(--cream)",
                       color: b.kind === "interview" ? "#fff" : "var(--muted)",
@@ -80,7 +82,7 @@ export function BulletinPage() {
                   >
                     {t.bulletin[KIND_LABEL_KEY[b.kind]]}
                   </span>
-                  <span className="font-sans text-[11px] text-[var(--muted)]">
+                  <span className="font-sans text-[12px] text-[var(--muted)]">
                     {formatDate(b.date, lang)}
                   </span>
                 </div>

@@ -8,6 +8,7 @@ export const en = {
     domains: "Prizes",
     winners: "Laureates",
     bulletin: "Gazette",
+    committee: "Committee",
     charter: "Charter",
     apply: "Apply",
     switchTo: "中文",
@@ -16,8 +17,6 @@ export const en = {
   common: {
     loading: "Retrieving the record…",
     loadFailed: "Failed to retrieve the record",
-    viewAll: "View all",
-    backTop: "Back to top",
     all: "All",
     menu: "Menu",
     close: "Close",
@@ -49,7 +48,7 @@ The Committee holds that interesting is the one quality that cannot be optimised
 
 **On money.** The prize comes entirely from the personal savings of halface. The Committee accumulates no capital, conducts no investment, and returns the account to zero after every drawing. The explanation: money left in an account does not become more interesting.
 
-**On the Committee.** The Committee has one member. One person opposing meritocracy is like one person opposing the weather.`,
+**On the Committee.** The Prize was founded by one person, and the Committee began as that person alone. One person opposing meritocracy is like one person opposing the weather.`,
     originClosing: "do something interesting.",
 
     domainsEyebrow: "Domains",
@@ -76,22 +75,19 @@ The Committee holds that interesting is the one quality that cannot be optimised
       "The total prize for each drawing equals the entire balance of the account at the moment of the drawing, divided equally among that drawing's laureates.",
     note1Strong: "The account returns to zero after every drawing.",
     charterRef: "Under Chapter 2 of the Charter, “The Prize” →",
-    ledgerTitle: "Account ledger",
-    ledgerNote:
-      "The Prize accumulates no capital; the account returns to zero after every drawing. Every deposit and every payout is listed above.",
-    deposit: "Deposit",
-    payout: (period) => `Paid out · ${period}`,
-    noLedger: "No entries yet.",
   },
 
   countdown: {
-    toNext: "Until the next drawing",
+    toNext: "Until the next round opens",
     days: "days",
     hours: "hrs",
     minutes: "min",
     seconds: "sec",
-    nextAt: "Next drawing",
+    nextAt: "Next round opens",
     beijingTime: " (Beijing time)",
+    judging: "Under adjudication",
+    judgingNote:
+      "The Committee is considering this round's laureates. Results are published once adjudication closes.",
   },
 
   domains: {
@@ -100,8 +96,8 @@ The Committee holds that interesting is the one quality that cannot be optimised
     desc:
       "The domains are set at the level of the Charter. They are drawn on three criteria: exhaustiveness — anything in a life can be placed somewhere; mutual exclusivity — no overlap; and resistance to obsolescence — the domain still holds a hundred years from now.",
     covers: "Covers",
-    special: "Special Prize",
     awardCount: (n) => (n > 0 ? `${n} award${n === 1 ? "" : "s"}` : "No awards yet"),
+    createdIn: (n) => `Created at round ${n}`,
     noAwards:
       "No award exists in this domain yet. The Committee may create one at any drawing.",
     moreAwards: (n) => `${n} more`,
@@ -116,7 +112,7 @@ The Committee holds that interesting is the one quality that cannot be optimised
     pageTitle: "Laureates",
     title: "Laureates",
     desc:
-      "The prize is drawn every Friday after the A-share market closes, with no limit on the number of laureates. A published record is not amended; where an error has genuinely occurred it is listed separately as an erratum, without overwriting the original.",
+      "A round opens every Friday after the A-share market closes, with no limit on the number of laureates. A published record is not amended; where an error has genuinely occurred it is listed separately as an erratum, without overwriting the original.",
     empty: "No drawings on record yet.",
     count: (n) => `${n} drawing${n === 1 ? "" : "s"}`,
     back: "← Back to the Laureates",
@@ -141,6 +137,9 @@ The Committee holds that interesting is the one quality that cannot be optimised
   draw: {
     period: (n) => `No. ${n}`,
     drawnOn: "drawn",
+    laureates: "Laureates",
+    laureatesCount: (n) => `${n} in total`,
+    grounds: "Grounds",
     placeholder: "SAMPLE · not a real result",
     vacant: "Vacant",
     vacantNote:
@@ -152,6 +151,34 @@ The Committee holds that interesting is the one quality that cannot be optimised
     metricDefault: "Published figure",
     winnersCount: (n) => `${n} laureate${n === 1 ? "" : "s"} this drawing · each receives`,
     balanceAfter: "Balance after the drawing",
+  },
+
+  committee: {
+    pageTitle: "The Committee",
+    title: "The Halface Prize Selection Committee",
+    desc: "The Selection Committee is the Prize's sole adjudicating body. It decides who wins, writes the grounds, and confers awards on its own initiative where no application has been made. It decides for itself how many members it has.",
+    historyTitle: "History",
+    markTitle: "Mark",
+    markBody:
+      "The Prize and its Committee share one mark: a circle, gold on the left half and navy on the right.\n\n「半面」 — half a face — names the half this prize looks at: not merit, but interesting.",
+    markGold: "Gold",
+    markNavy: "Navy",
+    membersTitle: "Members",
+    memberCount: (n) => `${n} member${n === 1 ? "" : "s"}`,
+    termLabel: "Term",
+    sinceLabel: "Since",
+    workTitle: "How the Committee works",
+    workBody: `The Committee is the Prize's sole adjudicating body. At each drawing it places applications into one of the seven domains, decides who wins and who does not, and writes the grounds. Where no application has been made, it may confer an award on the basis of public information.
+
+There is no fixed list of awards. The Committee may create a new award at any drawing; once created it enters the award library, may be reused in later drawings, and may not be withdrawn.
+
+Members are unpaid. The prize money comes entirely from the personal savings of the founder. The Prize accumulates no capital, conducts no investment, accepts no donation from any source, and has no funds to draw on.
+
+No member may collect any payment, raise funds, or make any financial commitment in the name of the Halface Prize.
+
+The Committee does not publish its deliberations, and is under no duty to give reasons for any decision.`,
+    contactTitle: "Contact",
+    contactNote: "Applications and objections both go to this address.",
   },
 
   notFound: {
@@ -167,7 +194,6 @@ The Committee holds that interesting is the one quality that cannot be optimised
     desc: (committee) => `This Charter is made and construed by the ${committee}.`,
     footnote:
       "The interpretation of these articles rests with the Committee. The Committee's understanding may change over time, but never retroactively as to drawings already published.",
-    refChapter: (n) => `Charter, Chapter ${n} →`,
     refArticle: (n) => `Charter, Article ${n} →`,
   },
 

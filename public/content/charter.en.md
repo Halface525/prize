@@ -14,7 +14,7 @@
 
 > Note: The purpose of this article is to ensure that the Prize cannot be cited as evidence by any party. Anyone citing the Prize to argue that artificial intelligence is harmful, that electronic devices are harmful, or that canteen food is good, has misused it.
 
-**Article 5 (The Committee)** The Prize has a Selection Committee, which is its sole adjudicating body. The Committee presently has one member. The Committee decides for itself whether that number rises or falls, and need not publish its reasons.
+**Article 5 (The Committee)** The Prize has a Selection Committee, which is its sole adjudicating body. The Committee decides for itself how many members it has, and need not publish its reasons.
 
 **Article 6 (Powers of the Committee)** The Committee may create awards, classify applications, determine laureates, declare vacancies, and construe this Charter. The Committee is under no obligation to give reasons for any decision.
 

@@ -66,7 +66,7 @@ export function DomainsPage() {
             <div className="figure mt-2 text-4xl leading-none">{awards.length}</div>
           </div>
           <div className="max-w-md">
-            <p className="text-[13px] leading-relaxed text-[var(--muted)]">
+            <p className="text-[14px] leading-relaxed text-[var(--muted)]">
               {t.domains.awardsCountNote}
             </p>
             <Link

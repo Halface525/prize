@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { Ribbon } from "../components/Ribbon";
 import { GoldButton } from "../components/GoldButton";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { useI18n } from "../i18n";
@@ -14,6 +15,7 @@ export function NotFoundPage() {
         className="hero-card"
         style={{ padding: "clamp(3rem, 8vw, 5rem) clamp(1.5rem, 5vw, 4rem)" }}
       >
+        <Ribbon />
         <div className="relative">
           <div className="figure text-6xl leading-none sm:text-7xl">{t.notFound.code}</div>
 
@@ -21,7 +23,7 @@ export function NotFoundPage() {
             {t.notFound.title}
           </h1>
 
-          <p className="mx-auto mt-5 max-w-lg text-[15px] leading-relaxed text-[var(--muted)]">
+          <p className="mx-auto mt-5 max-w-lg text-[16px] leading-relaxed text-[var(--muted)]">
             {t.notFound.desc}
           </p>
 

@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router";
 import { MarkdownBody } from "../components/MarkdownBody";
+import { EmptyState } from "../components/EmptyState";
 import { domains } from "../data/domains";
 import { awardsOfDomain } from "../data/awards";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
@@ -21,7 +22,7 @@ export function DomainDetailPage() {
         <p className="text-sm text-[var(--muted)]">{t.domains.noAwards}</p>
         <Link
           to="/domains"
-          className="font-sans mt-6 inline-block text-[12px] transition-opacity hover:opacity-60"
+          className="font-sans mt-6 inline-block text-[13px] transition-opacity hover:opacity-60"
           style={{ color: "var(--gold)" }}
         >
           {t.domains.back}
@@ -38,7 +39,7 @@ export function DomainDetailPage() {
     <div className="mx-auto max-w-3xl px-6">
       <Link
         to="/domains"
-        className="font-sans text-[12px] transition-opacity hover:opacity-60"
+        className="font-sans text-[13px] transition-opacity hover:opacity-60"
         style={{ color: "var(--gold)" }}
       >
         {t.domains.back}
@@ -57,18 +58,18 @@ export function DomainDetailPage() {
             <h1 className="font-display text-3xl font-bold leading-tight sm:text-4xl">
               {pick(domain, "name", lang)}
             </h1>
-            <div className="font-sans mt-2 text-[10px] tracking-[0.18em] text-[var(--muted)]">
+            <div className="font-sans mt-2 text-[11px] tracking-[0.18em] text-[var(--muted)]">
               {(lang === "zh" ? domain.nameEn : domain.name).toUpperCase()}
             </div>
           </div>
         </div>
 
-        <p className="mt-5 text-[14px] text-[var(--muted)]">
+        <p className="mt-5 text-[15px] text-[var(--muted)]">
           {t.domains.covers}：{pick(domain, "covers", lang)}
         </p>
 
         <p
-          className="mt-4 border-l-2 pl-4 text-[15px] italic leading-relaxed text-[var(--muted)]"
+          className="mt-4 border-l-2 pl-4 text-[16px] italic leading-relaxed text-[var(--muted)]"
           style={{ borderColor: "var(--goldlight)" }}
         >
           {pick(domain, "note", lang)}
@@ -79,15 +80,13 @@ export function DomainDetailPage() {
       <section className="mt-10">
         <div className="flex flex-wrap items-baseline justify-between gap-3">
           <h2 className="font-display text-xl font-bold">{t.nav.domains}</h2>
-          <span className="font-sans text-[11px] text-[var(--muted)]">
+          <span className="font-sans text-[12px] text-[var(--muted)]">
             {t.domains.awardCount(awards.length)}
           </span>
         </div>
 
         {awards.length === 0 ? (
-          <p className="mt-6 text-[14px] leading-relaxed text-[var(--muted)]">
-            {t.domains.noAwards}
-          </p>
+          <EmptyState className="mt-6" text={t.domains.noAwards} />
         ) : (
           <ul className="mt-6 space-y-5">
             {awards.map((a) => (
@@ -101,13 +100,22 @@ export function DomainDetailPage() {
                     {pick(a, "name", lang)}
                   </span>
                   <span
-                    className="font-sans rounded-full px-2 py-0.5 text-[10px] text-[var(--muted)]"
+                    className="font-sans rounded-full px-2 py-0.5 text-[11px] text-[var(--muted)]"
                     style={{ background: "var(--cream)" }}
                   >
                     {pick(a, "subject", lang)}
                   </span>
+                  {/* createdIn 省略表示建库时已有，那批不给标记 —— 见 awards.js 顶部说明 */}
+                  {a.createdIn > 0 && (
+                    <span
+                      className="font-sans rounded-full px-2 py-0.5 text-[11px]"
+                      style={{ background: "var(--cream)", color: "var(--gold)" }}
+                    >
+                      {t.domains.createdIn(a.createdIn)}
+                    </span>
+                  )}
                 </div>
-                <p className="mt-2 text-[14px] leading-relaxed text-[var(--muted)]">
+                <p className="mt-2 text-[15px] leading-relaxed text-[var(--muted)]">
                   {pick(a, "criterion", lang)}
                 </p>
               </li>
@@ -119,7 +127,7 @@ export function DomainDetailPage() {
       {/* 归类说明 */}
       <section className="mt-14">
         <div
-          className="rounded-2xl border px-6 py-6 text-[13px] leading-relaxed text-[var(--muted)]"
+          className="rounded-2xl border px-6 py-6 text-[14px] leading-relaxed text-[var(--muted)]"
           style={{ borderColor: "var(--line)", background: "var(--cream)" }}
         >
           <MarkdownBody>
@@ -146,7 +154,7 @@ export function DomainDetailPage() {
           {prev ? (
             <Link
               to={`/domains/${prev.id}`}
-              className="font-sans text-[12px] transition-opacity hover:opacity-60"
+              className="font-sans text-[13px] transition-opacity hover:opacity-60"
               style={{ color: "var(--muted)" }}
             >
               ← {pick(prev, "name", lang)}
@@ -157,7 +165,7 @@ export function DomainDetailPage() {
           {next && (
             <Link
               to={`/domains/${next.id}`}
-              className="font-sans text-[12px] transition-opacity hover:opacity-60"
+              className="font-sans text-[13px] transition-opacity hover:opacity-60"
               style={{ color: "var(--muted)" }}
             >
               {pick(next, "name", lang)} →

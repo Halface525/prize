@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { HeroCard } from "../components/HeroCard";
+import { Ribbon } from "../components/Ribbon";
 import { FundPanel } from "../components/FundPanel";
-import { FundLedger } from "../components/FundLedger";
 import { Countdown } from "../components/Countdown";
 import { SectionHeading } from "../components/SectionHeading";
 import { MarkdownBody } from "../components/MarkdownBody";
@@ -14,7 +14,6 @@ import { site } from "../data/site";
 import { useArticle } from "../hooks/useArticle";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { useI18n, localizedPath } from "../i18n";
-import { charterLink, charterRefClass } from "../utils/charter";
 
 export function HomePage() {
   useDocumentTitle(null);
@@ -50,23 +49,6 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* ── 账户流水 ─────────────────────────── */}
-      <section className="mt-14">
-        <div className="flex flex-wrap items-baseline justify-between gap-3">
-          <h2 className="font-display text-xl font-bold">{t.fund.ledgerTitle}</h2>
-          <Link
-            to={charterLink.chapter(2)}
-            className={charterRefClass}
-            style={{ color: "var(--gold)" }}
-          >
-            {t.fund.charterRef}
-          </Link>
-        </div>
-        <div className="mt-5">
-          <FundLedger />
-        </div>
-      </section>
-
       {/* ── 缘起 ─────────────────────────────── */}
       <section className="mt-20">
         <SectionHeading eyebrow={t.home.originEyebrow} title={t.home.originTitle} />
@@ -97,7 +79,7 @@ export function HomePage() {
           />
           <Link
             to="/domains"
-            className="font-sans shrink-0 text-[12px] transition-opacity hover:opacity-60"
+            className="font-sans shrink-0 text-[13px] transition-opacity hover:opacity-60"
             style={{ color: "var(--gold)" }}
           >
             {t.home.viewAllAwards}
@@ -127,7 +109,7 @@ export function HomePage() {
           <div className="mt-6 text-center">
             <Link
               to="/winners"
-              className="font-sans text-[12px] transition-opacity hover:opacity-60"
+              className="font-sans text-[13px] transition-opacity hover:opacity-60"
               style={{ color: "var(--gold)" }}
             >
               {t.home.viewAllDraws}
@@ -139,19 +121,25 @@ export function HomePage() {
       {/* ── 申请入口 ─────────────────────────── */}
       <section className="mt-20">
         <div
-          className="rounded-2xl border px-6 py-12 text-center sm:px-12"
+          className="relative overflow-hidden rounded-2xl border px-6 py-12 text-center sm:px-12"
           style={{ borderColor: "var(--line)", background: "var(--cream)" }}
         >
-          <div className="eyebrow">{t.home.ctaEyebrow}</div>
-          <h2 className="font-display mt-3 text-3xl font-bold">{t.home.ctaTitle}</h2>
-          <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-[var(--muted)]">
-            {t.home.ctaDesc}
-          </p>
-          <div className="font-sans mt-6 text-[13px] tracking-wide" style={{ color: "var(--gold)" }}>
-            {site.email}
-          </div>
-          <div className="mt-7">
-            <GoldButton to="/apply">{t.home.ctaButton}</GoldButton>
+          <Ribbon />
+          <div className="relative">
+            <div className="eyebrow">{t.home.ctaEyebrow}</div>
+            <h2 className="font-display mt-3 text-3xl font-bold">{t.home.ctaTitle}</h2>
+            <p className="mx-auto mt-4 max-w-xl text-[16px] leading-relaxed text-[var(--muted)]">
+              {t.home.ctaDesc}
+            </p>
+            <div
+              className="font-sans mt-6 text-[14px] tracking-wide"
+              style={{ color: "var(--gold)" }}
+            >
+              {site.email}
+            </div>
+            <div className="mt-7">
+              <GoldButton to="/apply">{t.home.ctaButton}</GoldButton>
+            </div>
           </div>
         </div>
       </section>

@@ -18,17 +18,17 @@ export function FundPanel({ compact = false }) {
           <div className="figure mt-3 text-5xl leading-none sm:text-6xl">
             {formatAmount(fund.balance)}
           </div>
-          <p className="font-sans mt-3 text-[11px] text-[var(--muted)]">
+          <p className="font-sans mt-3 text-[12px] text-[var(--muted)]">
             {t.fund.asOf} {fund.updatedAt}
           </p>
         </div>
 
         <div className="max-w-sm">
-          <p className="text-[13px] leading-relaxed text-[var(--muted)]">
+          <p className="text-[14px] leading-relaxed text-[var(--muted)]">
             {t.fund.note1}
             <strong className="font-semibold text-[var(--ink)]">{t.fund.note1Strong}</strong>
           </p>
-          <p className="mt-3 text-[13px] leading-relaxed text-[var(--muted)]">
+          <p className="mt-3 text-[14px] leading-relaxed text-[var(--muted)]">
             {lang === "zh" ? fund.source + fund.policy : `${fund.sourceEn} ${fund.policyEn}`}
           </p>
         </div>

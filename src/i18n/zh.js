@@ -8,6 +8,7 @@ export const zh = {
     domains: "奖项",
     winners: "获奖名单",
     bulletin: "公报",
+    committee: "委员会",
     charter: "章程",
     apply: "申请",
     switchTo: "English",
@@ -16,8 +17,6 @@ export const zh = {
   common: {
     loading: "正在调阅档案…",
     loadFailed: "档案调阅失败",
-    viewAll: "查看全部",
-    backTop: "回到顶部",
     all: "全部",
     menu: "菜单",
     close: "关闭",
@@ -48,7 +47,7 @@ export const zh = {
 
 **关于钱。** 奖金全部来自 halface 的个人储蓄。委员会不设基金积累，不作投资运作，每期开奖后账户归零。对此的解释是：钱留在账户里，不会变得更有意思。
 
-**关于委员会。** 委员会现有委员一人。一个人反对优绩主义，就像一个人反对天气。`,
+**关于委员会。** 本奖由一个人设立，委员会最初也只有一人。一个人反对优绩主义，就像一个人反对天气。`,
     originClosing: "do something interesting.",
 
     domainsEyebrow: "领域",
@@ -74,21 +73,18 @@ export const zh = {
     note1: "每期奖金总额等于开奖时刻账户的全部余额，由当期获奖者平分。",
     note1Strong: "开奖后账户归零。",
     charterRef: "依据章程第二章「奖金」 →",
-    ledgerTitle: "账户流水",
-    ledgerNote: "本奖不设基金积累，每期开奖后账户归零。上表列示历次存入与支出。",
-    deposit: "存入",
-    payout: (period) => `${period}开奖`,
-    noLedger: "尚无流水。",
   },
 
   countdown: {
-    toNext: "距下期开奖",
+    toNext: "距下期评选开始",
     days: "天",
     hours: "时",
     minutes: "分",
     seconds: "秒",
-    nextAt: "下期开奖",
+    nextAt: "下期评选开始",
     beijingTime: "（北京时间）",
+    judging: "本期评审中",
+    judgingNote: "委员会正在评选本期获奖者，结果于评选结束后公示。",
   },
 
   domains: {
@@ -97,8 +93,8 @@ export const zh = {
     desc:
       "领域是章程级设置，非经章程修改程序不得增减。划分依据三条：穷尽性——任何一件生活里的事都能落进去；互斥性——不重叠；抗过时性——一百年后这个领域还成立。",
     covers: "涵盖",
-    special: "特别奖",
     awardCount: (n) => (n > 0 ? `共 ${n} 项` : "暂无奖项"),
+    createdIn: (n) => `创设于第 ${n} 期`,
     noAwards: "本领域尚无奖项。委员会可于任一期开奖时创设。",
     moreAwards: (n) => `另有 ${n} 项`,
     back: "← 返回奖项",
@@ -112,7 +108,7 @@ export const zh = {
     pageTitle: "获奖名单",
     title: "获奖名单",
     desc:
-      "本奖每周五 A 股收盘后开奖，每次获奖人数不限。开奖记录一经公示不予修改；如确有错误，以「勘误」形式另行列示，不覆盖原文。",
+      "本奖每周五 A 股收盘后开始评选，每次获奖人数不限。开奖记录一经公示不予修改；如确有错误，以「勘误」形式另行列示，不覆盖原文。",
     empty: "尚无开奖记录。",
     count: (n) => `共 ${n} 期`,
     back: "← 返回获奖名单",
@@ -137,6 +133,9 @@ export const zh = {
   draw: {
     period: (n) => `第 ${n} 期`,
     drawnOn: "开奖",
+    laureates: "获奖者",
+    laureatesCount: (n) => `共 ${n} 名`,
+    grounds: "获奖理由",
     placeholder: "样张 · 非真实评选结果",
     vacant: "本期空缺",
     vacantNote: "本期无人获奖。空缺按期数正常编号，不顺延、不合并。",
@@ -147,6 +146,33 @@ export const zh = {
     metricDefault: "公示数据",
     winnersCount: (n) => `本期获奖 ${n} 名，每人实得`,
     balanceAfter: "开奖后账户余额",
+  },
+
+  committee: {
+    pageTitle: "委员会",
+    title: "半面奖评选委员会",
+    desc: "评选委员会是本奖唯一的评选机构。它决定谁获奖、撰写获奖理由，并在无人申请时主动授予。委员会自行决定其委员人数。",
+    historyTitle: "沿革",
+    markTitle: "标识",
+    markBody: "半面奖与评选委员会共用同一标识：一个圆，左半为金，右半为藏青。\n\n「半面」意指本奖只看事情的一半——不奖励优绩，只奖励有趣。",
+    markGold: "金",
+    markNavy: "藏青",
+    membersTitle: "现任委员",
+    memberCount: (n) => `共 ${n} 人`,
+    termLabel: "任期",
+    sinceLabel: "自",
+    workTitle: "委员会如何工作",
+    workBody: `委员会是本奖唯一的评选机构。每期开奖，它把申请归入七个领域之一，决定谁获奖、谁不获奖，并撰写获奖理由。无人申请时，它有权依据公开信息主动授予。
+
+奖项不设固定清单。委员会可在任一期创设新奖项，已创设的奖项列入奖项库，供后续各期沿用，且一经入库不得撤销。
+
+委员无报酬。奖金全部来源于设立人的个人储蓄，本奖不设基金积累，不作投资运作，不接受任何社会捐助，亦无经费可供支取。
+
+委员不得以「半面奖」名义收取款项、募集资金，或作出任何财务承诺。
+
+委员会不公布评选过程，亦无义务说明任何决定的理由。`,
+    contactTitle: "联系",
+    contactNote: "申请与异议均致此邮箱。",
   },
 
   notFound: {
@@ -162,7 +188,6 @@ export const zh = {
     desc: (committee) => `本章程由${committee}制定并解释。`,
     footnote:
       "对本章程条文的解释，以委员会的理解为准。委员会的理解可能随时间变化，但不溯及既往开奖记录。",
-    refChapter: (n) => `章程第 ${n} 章 →`,
     refArticle: (n) => `章程第 ${n} 条 →`,
   },
 

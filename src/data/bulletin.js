@@ -18,6 +18,30 @@
 /** kind: "notice"（公告） | "dispatch"（通讯，含谈话记录与介绍） */
 export const bulletins = [
   {
+    id: "2026-09-19-committee-composition",
+    kind: "notice",
+    date: "2026-09-19",
+    title: "委员会组成变更公告",
+    titleEn: "Notice: change in the composition of the Committee",
+    file: "content/bulletin/2026-09-19-committee-composition.md",
+  },
+  {
+    id: "2026-09-19-charter-amendment",
+    kind: "notice",
+    date: "2026-09-19",
+    title: "章程修订通知",
+    titleEn: "Notice of amendment to the Charter",
+    file: "content/bulletin/2026-09-19-charter-amendment.md",
+  },
+  {
+    id: "2026-09-19-round-1-closed",
+    kind: "notice",
+    date: "2026-09-19",
+    title: "第 1 期评选结束公告",
+    titleEn: "Notice: round 1 closed",
+    file: "content/bulletin/2026-09-19-round-1-closed.md",
+  },
+  {
     id: "2026-09-18-first-drawing",
     kind: "notice",
     date: "2026-09-18",

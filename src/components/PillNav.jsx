@@ -1,18 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router";
 import { footerItems, navItems, site } from "../data/site";
+import { Mark } from "./Mark";
 import { useI18n } from "../i18n";
-
-/** 半面环形标记：一半藏青，一半金 */
-function Mark({ size = 30 }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true">
-      <circle cx="16" cy="16" r="15" fill="#1b2a6b" />
-      <path d="M16 1a15 15 0 0 0 0 30z" fill="#c9a961" />
-      <circle cx="16" cy="16" r="15" fill="none" stroke="#1b2a6b" strokeWidth="1" />
-    </svg>
-  );
-}
 
 function MenuIcon({ open }) {
   return (
@@ -41,25 +31,67 @@ export function PillNav() {
   const { lang, toggle, t } = useI18n();
   const [open, setOpen] = useState(false);
 
+  // 惰性初始化：浏览器恢复滚动位置时（刷新页面、前进后退），
+  // 首帧就该是正确状态，否则会先画一帧裸导航再跳成胶囊。
+  const [scrolled, setScrolled] = useState(
+    () => typeof window !== "undefined" && window.scrollY > 24
+  );
+
   const current = navItems.find((i) => i.path === pathname)?.id;
+
+  /**
+   * 滚动检测。三个要点：
+   *
+   * 1. 迟滞 —— 出现用 24px，消失用 8px。中间那段保持当前状态。
+   *    宽度形变比透明度显眼得多，在阈值附近来回蹭滚轮会非常刺眼。
+   * 2. rAF 节流 —— 滚动事件每帧都可能触发，但只在状态真正变化时才 setState。
+   * 3. 阈值必须小（24px）—— 胶囊底边在 64px，hero 卡片顶边在 96px，
+   *    滚到 32px 时内容就开始钻到导航下面了。再晚就穿帮。
+   */
+  useEffect(() => {
+    const ON = 24;
+    const OFF = 8;
+    let raf = 0;
+
+    const check = () => {
+      raf = 0;
+      const y = window.scrollY;
+      setScrolled((prev) => (prev ? y > OFF : y > ON));
+    };
+
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(check);
+    };
+
+    check();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
 
   // 换页就收起菜单，否则点完链接菜单还挂在那儿
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
 
+  // 菜单展开时必须强制有外壳 —— 下拉是挂在胶囊下方的，
+  // 胶囊要是透明的，菜单就锚在一根看不见的条上。
+  const showSurface = scrolled || open;
+
   // 窄屏菜单里连章程一起列出来 —— 章程不在主导航里，
   // 移动端用户不会为了找它一路滚到页脚
   const menuItems = footerItems.filter((i) => i.id !== "apply");
 
   return (
-    <nav className="pill-nav">
-      <div className="flex items-center justify-between gap-2 px-3 py-2 sm:gap-3 sm:px-4">
+    <nav className={`pill-nav ${showSurface ? "is-scrolled" : ""}`}>
+      <div className="nav-inner flex items-center justify-between gap-2 py-2 sm:gap-3">
         {/* 左：标记 + 站名（站名窄屏隐藏，腾地方给右侧） */}
         <Link to="/" className="flex shrink-0 items-center gap-2.5">
           <Mark />
           <span className="hidden leading-none sm:block">
-            <span className="font-display block text-[15px] font-bold tracking-wide">
+            <span className="font-display block text-[16px] font-bold tracking-wide">
               {lang === "zh" ? site.nameZh : "Halface Prize"}
             </span>
             <span className="font-sans mt-0.5 block text-[7px] font-medium tracking-[0.18em] text-[var(--muted)]">
@@ -81,7 +113,7 @@ export function PillNav() {
               <Link
                 key={item.id}
                 to={item.path}
-                className="font-sans shrink-0 whitespace-nowrap rounded-full px-2.5 py-1.5 text-[13px] transition-colors lg:px-3.5"
+                className="font-sans shrink-0 whitespace-nowrap rounded-full px-2.5 py-1.5 text-[14px] transition-colors lg:px-3.5"
                 style={{
                   color: current === item.id ? "var(--ink)" : "var(--muted)",
                   background: current === item.id ? "var(--cream)" : "transparent",
@@ -99,13 +131,13 @@ export function PillNav() {
             type="button"
             onClick={toggle}
             title={t.nav.switchTo}
-            className="font-sans rounded-full border px-2.5 py-1.5 text-[11px] transition-colors hover:border-[var(--ink)] sm:px-3"
+            className="font-sans rounded-full border px-2.5 py-1.5 text-[12px] transition-colors hover:border-[var(--ink)] sm:px-3"
             style={{ borderColor: "var(--line)", color: "var(--muted)" }}
           >
             {t.short}
           </button>
 
-          <Link to="/apply" className="btn-gold !px-3 !py-1.5 !text-[12px] sm:!px-5">
+          <Link to="/apply" className="btn-gold !px-3 !py-1.5 !text-[13px] sm:!px-5">
             {t.nav.apply}
           </Link>
 
@@ -134,7 +166,7 @@ export function PillNav() {
               <Link
                 key={item.id}
                 to={item.path}
-                className="block border-t px-5 py-3 text-[14px] transition-colors first:border-t-0"
+                className="block border-t px-5 py-3 text-[15px] transition-colors first:border-t-0"
                 style={{
                   borderColor: "var(--line)",
                   color: active ? "var(--ink)" : "var(--muted)",

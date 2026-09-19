@@ -18,17 +18,15 @@ import { domains } from "./domains.js";
 
 export const draws = [
   {
-    id: "2026-09-18",
+    id: "2026-09-19",
     period: 1,
-    date: "2026-09-18",
-    // 样张：内容为格式示范，不是真实评选结果。页面上会打「样张」标记。
-    placeholder: true,
+    date: "2026-09-19",
 
     pool: 1247.3,
-    perWinner: 623.65,
+    perWinner: 1247.3,
     balanceAfter: 0,
 
-    file: "content/draws/2026-09-18.md",
+    file: "content/draws/2026-09-19.md",
 
     // 无人获奖（空缺）时留空数组即可，卡片和详情页都会显示「本期空缺」。
     //
@@ -37,24 +35,13 @@ export const draws = [
     // award 则相反，是当时实际授予的奖项名，照实记录（章程第三十三条：记录不予修改）。
     winners: [
       {
-        name: "不愿具名者",
-        nameEn: "A person who prefers not to be named",
+        name: "halface",
         domainId: "labor",
-        award: "最低人工智能依赖奖",
-        awardEn: "Least Reliance on AI Prize",
-        metricLabel: "AI 使用率",
-        metricLabelEn: "Rate of AI use",
-        metric: "0%",
-      },
-      {
-        name: "图书馆三楼靠窗的猫",
-        nameEn: "The cat by the window on the third floor of the library",
-        domainId: "nonhuman",
-        award: "校园猫全勤奖",
-        awardEn: "Perfect Attendance Prize, Campus Cat",
-        metricLabel: "出现天数",
-        metricLabelEn: "Days present",
-        metric: "187",
+        award: "无报酬职务奖",
+        awardEn: "Unpaid Post Prize",
+        metricLabel: "该职务所得报酬",
+        metricLabelEn: "Remuneration from the post",
+        metric: "¥0",
       },
     ],
   },

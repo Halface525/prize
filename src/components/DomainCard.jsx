@@ -30,23 +30,23 @@ export function DomainCard({ domain, maxAwards = 4 }) {
               <h3 className="font-display text-xl font-bold leading-none">
                 {pick(domain, "name", lang)}
               </h3>
-              <div className="font-sans mt-1.5 text-[10px] tracking-[0.18em] text-[var(--muted)]">
+              <div className="font-sans mt-1.5 text-[11px] tracking-[0.18em] text-[var(--muted)]">
                 {(lang === "zh" ? domain.nameEn : domain.name).toUpperCase()}
               </div>
             </div>
           </div>
 
-          <span className="font-sans shrink-0 text-[11px] text-[var(--muted)]">
+          <span className="font-sans shrink-0 text-[12px] text-[var(--muted)]">
             {t.domains.awardCount(list.length)}
           </span>
         </div>
 
-        <p className="mt-4 text-[13px] text-[var(--muted)]">
+        <p className="mt-4 text-[14px] text-[var(--muted)]">
           {t.domains.covers}：{pick(domain, "covers", lang)}
         </p>
 
         <p
-          className="mt-4 border-l-2 pl-3 text-[13px] italic leading-relaxed text-[var(--muted)]"
+          className="mt-4 border-l-2 pl-3 text-[14px] italic leading-relaxed text-[var(--muted)]"
           style={{ borderColor: "var(--goldlight)" }}
         >
           {pick(domain, "note", lang)}
@@ -55,9 +55,9 @@ export function DomainCard({ domain, maxAwards = 4 }) {
         {/* 奖项名预览 */}
         <div className="mt-5 border-t pt-4" style={{ borderColor: "var(--line)" }}>
           {list.length === 0 ? (
-            <p className="text-[12px] text-[var(--muted)]">{t.domains.noAwards}</p>
+            <p className="text-[13px] text-[var(--muted)]">{t.domains.noAwards}</p>
           ) : (
-            <p className="text-[13px] leading-relaxed">
+            <p className="text-[14px] leading-relaxed">
               {teaser.map((a) => pick(a, "name", lang)).join(" · ")}
               {rest > 0 && (
                 <span className="text-[var(--muted)]"> {t.domains.moreAwards(rest)}</span>
@@ -65,7 +65,7 @@ export function DomainCard({ domain, maxAwards = 4 }) {
             </p>
           )}
 
-          <span className="font-sans mt-3 inline-block text-[12px]" style={{ color: "var(--gold)" }}>
+          <span className="font-sans mt-3 inline-block text-[13px]" style={{ color: "var(--gold)" }}>
             {t.domains.viewDomain}
           </span>
         </div>

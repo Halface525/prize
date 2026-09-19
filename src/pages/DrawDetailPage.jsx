@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router";
 import { DrawRecord } from "../components/DrawRecord";
+import { EmptyState } from "../components/EmptyState";
 import { getDraw, sortedDraws } from "../data/draws";
 import { useArticle } from "../hooks/useArticle";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
@@ -16,15 +17,16 @@ export function DrawDetailPage() {
 
   if (!draw) {
     return (
-      <div className="mx-auto max-w-3xl px-6 py-20 text-center">
-        <p className="text-sm text-[var(--muted)]">{t.winners.empty}</p>
-        <Link
-          to="/winners"
-          className="font-sans mt-6 inline-block text-[12px] transition-opacity hover:opacity-60"
-          style={{ color: "var(--gold)" }}
-        >
-          {t.winners.back}
-        </Link>
+      <div className="mx-auto max-w-3xl px-6 py-16">
+        <EmptyState text={t.winners.empty}>
+          <Link
+            to="/winners"
+            className="font-sans text-[13px] transition-opacity hover:opacity-60"
+            style={{ color: "var(--gold)" }}
+          >
+            {t.winners.back}
+          </Link>
+        </EmptyState>
       </div>
     );
   }
@@ -39,7 +41,7 @@ export function DrawDetailPage() {
     <div className="mx-auto max-w-3xl px-6">
       <Link
         to="/winners"
-        className="font-sans text-[12px] transition-opacity hover:opacity-60"
+        className="font-sans text-[13px] transition-opacity hover:opacity-60"
         style={{ color: "var(--gold)" }}
       >
         {t.winners.back}
@@ -58,7 +60,7 @@ export function DrawDetailPage() {
           {older ? (
             <Link
               to={`/winners/${older.id}`}
-              className="font-sans text-[12px] transition-opacity hover:opacity-60"
+              className="font-sans text-[13px] transition-opacity hover:opacity-60"
               style={{ color: "var(--muted)" }}
             >
               ← {t.draw.period(older.period)}
@@ -69,7 +71,7 @@ export function DrawDetailPage() {
           {newer && (
             <Link
               to={`/winners/${newer.id}`}
-              className="font-sans text-[12px] transition-opacity hover:opacity-60"
+              className="font-sans text-[13px] transition-opacity hover:opacity-60"
               style={{ color: "var(--muted)" }}
             >
               {t.draw.period(newer.period)} →

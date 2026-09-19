@@ -7,6 +7,7 @@ import { WinnersPage } from "./pages/WinnersPage";
 import { DrawDetailPage } from "./pages/DrawDetailPage";
 import { BulletinPage } from "./pages/BulletinPage";
 import { BulletinItemPage } from "./pages/BulletinItemPage";
+import { CommitteePage } from "./pages/CommitteePage";
 import { CharterPage } from "./pages/CharterPage";
 import { ApplyPage } from "./pages/ApplyPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
@@ -24,6 +25,7 @@ function App() {
           <Route path="/winners/:id" element={<DrawDetailPage />} />
           <Route path="/bulletin" element={<BulletinPage />} />
           <Route path="/bulletin/:id" element={<BulletinItemPage />} />
+          <Route path="/committee" element={<CommitteePage />} />
           <Route path="/charter" element={<CharterPage />} />
           <Route path="/apply" element={<ApplyPage />} />
           <Route path="*" element={<NotFoundPage />} />

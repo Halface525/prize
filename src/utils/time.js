@@ -10,7 +10,10 @@ const MONTH_EN = [
 const WEEKDAY_EN = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 /**
- * 下一个开奖时刻（每周五 15:00 北京时间）的真实 epoch 毫秒。
+ * 下一个评选开始时刻（每周五 15:00 北京时间）的真实 epoch 毫秒。
+ *
+ * 注意是「评选开始」不是「开奖」—— 章程第二十六条：评选于每周五 A 股收市后开始。
+ * 周五收市是本期的截止与开评，不是结果公布。委员会用周末评审，结果随后公示。
  *
  * 实现要点：把真实时刻平移到「北京墙上时间」后再用 getUTC* 读取，
  * 读出来的就是北京时间；算完再平移回去。这样无论访客在哪个时区，
@@ -36,6 +39,29 @@ export function nextDrawTime(nowMs = Date.now()) {
   );
 
   return targetShifted - CST_OFFSET_MS;
+}
+
+/**
+ * 现在处于每周周期的哪一段。一律按北京时间。
+ *
+ *   "judging"   评审中 —— 周五 15:00 起，到周一 00:00 止
+ *   "countdown" 倒计时 —— 周一 00:00 起，到下周五 15:00 止
+ *
+ * 依据章程第二十六条：评选于每周五 A 股收市后开始。
+ * 周五收市那一刻起就是评审期，委员会用周末干活；周一开始收下一期。
+ *
+ * 所以周五 15:00 到周日 24:00 之间不再显示倒计时 —— 那段时间倒计的是什么？
+ * 该显示「评审中」。
+ */
+export function drawPhase(nowMs = Date.now()) {
+  const s = new Date(nowMs + CST_OFFSET_MS);
+  const dow = s.getUTCDay(); // 0=周日 … 5=周五, 6=周六
+  const hour = s.getUTCHours();
+
+  if (dow === 5 && hour >= 15) return "judging"; // 周五收市之后
+  if (dow === 6 || dow === 0) return "judging"; // 周六、周日
+
+  return "countdown";
 }
 
 /** 拆成天/时/分/秒 */

@@ -5,6 +5,9 @@
  * 只要它能归入某个领域。已创设的奖项列入本库，供后续各期沿用。
  *
  * 本库只会变长。它越来越长、越来越怪，是本奖的正常状态。
+ *
+ * createdIn 记「创设于第几期」。**省略表示建库时已有**——
+ * 那批是 2026 年 9 月建库时一并定下的，不归属于任何一期。
  */
 
 export const awards = [
@@ -103,6 +106,17 @@ export const awards = [
     subjectEn: "Person",
     criterion: "连续使用同一套工具链而未曾更换的年数最长者。",
     criterionEn: "Most consecutive years using one toolchain without change.",
+  },
+  {
+    id: "unpaid-post",
+    domain: "labor",
+    name: "无报酬职务奖",
+    nameEn: "Unpaid Post Prize",
+    subject: "人",
+    subjectEn: "Person",
+    criterion: "担任不支付报酬的职务，且该职务由本人设立者。",
+    criterionEn: "Holding an unpaid post that the holder established.",
+    createdIn: 1,
   },
 
   // ── 四、关系 ─────────────────────────────────────

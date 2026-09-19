@@ -45,7 +45,7 @@ export function CharterPage() {
       </div>
 
       <div
-        className="mt-14 rounded-2xl border px-6 py-6 text-[13px] leading-relaxed text-[var(--muted)]"
+        className="mt-14 rounded-2xl border px-6 py-6 text-[14px] leading-relaxed text-[var(--muted)]"
         style={{ borderColor: "var(--line)", background: "var(--cream)" }}
       >
         <p>{t.charter.footnote}</p>

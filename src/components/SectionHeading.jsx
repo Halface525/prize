@@ -14,7 +14,7 @@ export function SectionHeading({ eyebrow, title, description, align = "left", cl
       </h2>
       {description && (
         <p
-          className={`mt-4 text-[15px] leading-relaxed text-[var(--muted)] ${
+          className={`mt-4 text-[16px] leading-relaxed text-[var(--muted)] ${
             centered ? "mx-auto max-w-2xl" : "max-w-2xl"
           }`}
         >
