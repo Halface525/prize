@@ -1,5 +1,8 @@
 node_modules/
 dist/
+
+# 无头 Chrome 出图时用的临时用户目录（--user-data-dir），里面全是缓存
+.chrome-og-tmp/
 .DS_Store
 Thumbs.db
 *.log

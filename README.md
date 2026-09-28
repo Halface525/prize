@@ -316,9 +316,18 @@ GitHub Pages 在中国大陆访问不稳定。这不影响申请——**申请�
 
 ## 待补素材
 
-- **`public/og.png`** —— 微信分享卡（1200×630）。`index.html` 已引用但文件还没做。
-  微信不执行 JS，分享预览必须是静态图。同一张图也可以用作 GitHub 仓库的
+- **`public/og.png`** —— 微信分享卡（1200×630），已生成。源文件在 `scripts/og-card.html`，
+  改动后用无头 Chrome 重新截图即可（命令见该文件头部的注释）。微信不执行 JS，
+  分享预览必须是静态图。同一张图也可以用作 GitHub 仓库的
   Social preview（Settings 页顶部），但那是两个不同的地方。
+
+  > 截图命令里的 `--virtual-time-budget` **不能省**：Chrome 默认不等 webfont 加载完
+  > 就截图，产出的字会掉回系统衬线体，而且不报任何错。
+  >
+  > `index.html` 里的 `og:image` 必须是**绝对**网址——爬虫不会相对当前页面解析，
+  > 写成 `./og.png` 的后果是图**根本不出现**，同样不报错。换域名时要跟着改。
+
+  早期那版米色稿留在 `scripts/og-card.v1.html`，未使用，仅作备份。
 - **hero 的金色飘带**目前是内联 SVG 占位（`src/components/HeroCard.jsx`），
   要更接近参考站可以换成位图。
 

@@ -13,7 +13,13 @@
     <meta property="og:site_name" content="半面奖 The Halface Prize" />
     <meta property="og:title" content="半面奖 · 有趣足矣" />
     <meta property="og:description" content="不奖励优绩，只奖励有趣。每周五 A 股收盘后开始评选，奖金为账户全部余额，开奖后归零。" />
-    <meta property="og:image" content="./og.png" />
+    <!-- ⚠️ 这里必须是**绝对**网址。爬虫不会拿它去相对当前页面解析，
+         写 ./og.png 的后果不是「图不对」，是**图根本不出现**，而且不报任何错。
+         换自定义域名时这一行要跟着改。 -->
+    <meta property="og:image" content="https://halface525.github.io/prize/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:url" content="https://halface525.github.io/prize/" />
     <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />

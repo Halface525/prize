@@ -1,0 +1,254 @@
+<!doctype html>
+<!--
+  分享卡源（1200×630）· 深蓝版。
+
+  这是 og.png 的可再生成源文件，不是页面的一部分 —— 微信、GitHub Social preview
+  都不执行 JS，分享预览必须是静态图，所以只能靠截图产出位图。
+
+  重新出图：
+    "<Chrome>" --headless=new --disable-gpu --hide-scrollbars \
+      --force-device-scale-factor=1 --window-size=1200,630 \
+      --virtual-time-budget=8000 --user-data-dir=<临时目录> \
+      --screenshot=public/og.png scripts/og-card.html
+
+  --virtual-time-budget 不能省：Chrome 默认不等 webfont 加载完就截图，
+  产出的字会掉回系统衬线体，而且不报任何错。
+
+  ── 为什么是深蓝底 ──
+  站点本身是米色纸感，但分享卡的任务不是「像站点」，是「在别人的信息流里被看见」——
+  微信里刷过去的多是照片和米白卡片，米色卡会直接融进去。
+  深蓝(#1b2a6b)与金(#c9a961)本来就是半面标记自己的一对颜色，
+  所以这不是引入新色，是把标记的配色翻上来当底。
+
+  ── 主视觉 ──
+  右下那个金色半圆就是标记本身（◐），放大到 720px 出血。
+  「半面」是奖的名字，也是这张卡的形状。
+
+  ── 刻意不写的东西 ──
+  不写余额、期次、日期（章程第三十三条：开奖记录一经公示不予修改；
+  余额每周归零）。这张卡是常设的，写进会变的数字就得每周重出一次图。
+-->
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Noto+Serif+SC:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --cream: #f5f2ec;
+        --gold: #c9a961;
+        --gold-lit: #e3ca8e;
+        --navy: #1b2a6b;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+      }
+
+      body {
+        background: var(--navy);
+        color: var(--cream);
+        font-family: "Noto Serif SC", "Source Han Serif SC", serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .card {
+        position: relative;
+        width: 1200px;
+        height: 630px;
+        padding: 70px 84px 62px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: hidden;
+      }
+
+      /* 底纹：一团极淡的光，免得大片深蓝发死 */
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: radial-gradient(90% 70% at 6% 2%, rgba(255, 255, 255, 0.06) 0%, transparent 58%);
+      }
+
+      /* 主视觉：◐ 立在右栏，清晰的一个金半圆。
+         整圆描边不能省 —— 左半金贴在深蓝底上只剩半个圆，
+         没有那道细边就看不出它是「一个整圆被切掉了一半」。 */
+      .emblem {
+        position: absolute;
+        right: 84px;
+        top: 104px;
+        width: 384px;
+        height: 384px;
+        pointer-events: none;
+      }
+
+      .row-top {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .brand .zh {
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+      }
+
+      .brand .en {
+        font-family: "Playfair Display", serif;
+        font-size: 15px;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: rgba(245, 242, 236, 0.55);
+      }
+
+      .est {
+        font-family: "Playfair Display", serif;
+        font-size: 15px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+      }
+
+      .masthead {
+        position: relative;
+        max-width: 640px; /* 给右下那个半圆让路，别压上去 */
+      }
+
+      h1 {
+        font-size: 84px;
+        font-weight: 700;
+        line-height: 1.14;
+        letter-spacing: 0.03em;
+      }
+
+      h1 em {
+        font-style: normal;
+        color: var(--gold-lit);
+      }
+
+      .rule {
+        width: 120px;
+        height: 2px;
+        background: var(--gold);
+        margin: 30px 0 26px;
+      }
+
+      .facts {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 16px;
+        font-size: 21px;
+        font-weight: 300;
+        line-height: 1.7;
+        color: rgba(245, 242, 236, 0.78);
+        letter-spacing: 0.03em;
+      }
+
+      .dot {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: var(--gold);
+        flex: none;
+      }
+
+      .row-bottom {
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+      }
+
+      .policy {
+        font-size: 19px;
+        font-weight: 300;
+        color: rgba(245, 242, 236, 0.5);
+        letter-spacing: 0.04em;
+      }
+
+      .contact {
+        text-align: right;
+      }
+
+      .contact .label {
+        font-family: "Playfair Display", serif;
+        font-size: 14px;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: rgba(245, 242, 236, 0.5);
+        margin-bottom: 6px;
+      }
+
+      .contact .addr {
+        font-family: "Playfair Display", serif;
+        font-size: 24px;
+        color: var(--gold-lit);
+        letter-spacing: 0.02em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <svg class="emblem" viewBox="0 0 200 200" aria-hidden="true">
+        <circle cx="100" cy="100" r="99" fill="none" stroke="#c9a961" stroke-width="1.4" opacity="0.55" />
+        <path d="M100 1a99 99 0 0 0 0 198z" fill="#c9a961" opacity="0.92" />
+      </svg>
+
+      <div class="row-top">
+        <div class="brand">
+          <svg width="40" height="40" viewBox="0 0 32 32" aria-hidden="true">
+            <circle cx="16" cy="16" r="15" fill="none" stroke="#c9a961" stroke-width="1.4" />
+            <path d="M16 1a15 15 0 0 0 0 30z" fill="#c9a961" />
+          </svg>
+          <span class="zh">半面奖</span>
+          <span class="en">The Halface Prize</span>
+        </div>
+        <span class="est">Est. 2026</span>
+      </div>
+
+      <div class="masthead">
+        <h1>不奖励优绩，<br /><em>只奖励有趣</em>。</h1>
+        <div class="rule"></div>
+        <div class="facts">
+          <span>每周五 A 股收盘后开奖</span>
+          <span class="dot"></span>
+          <span>奖金为账户全部余额</span>
+          <span class="dot"></span>
+          <span>开奖后归零</span>
+        </div>
+      </div>
+
+      <div class="row-bottom">
+        <div class="policy">本奖不接受任何社会捐助。</div>
+        <div class="contact">
+          <div class="label">Apply</div>
+          <div class="addr">halface16@gmail.com</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
