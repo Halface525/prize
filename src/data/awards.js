@@ -182,6 +182,19 @@ export const awards = [
     criterion: "平均回复时长最长而人际关系未受影响者。",
     criterionEn: "Longest average reply time, with relationships unimpaired.",
   },
+  {
+    // 创设于第 3 期。subject 描述的是**奖项的对象**（对照「零幻觉奖」标人工智能、
+    // 「校园猫全勤奖」标动物），所以这里标「文本」而不是获奖者所属的类别。
+    id: "farthest-association",
+    domain: "expression",
+    name: "关联最远奖",
+    nameEn: "Farthest Association Prize",
+    subject: "文本",
+    subjectEn: "Text",
+    criterion: "一则标题中，与所报新闻距离最远的事实。",
+    criterionEn: "In a headline, the fact furthest removed from the news it reports.",
+    createdIn: 3,
+  },
 
   // ── 六、器物 ─────────────────────────────────────
   {

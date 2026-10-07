@@ -18,6 +18,35 @@ import { domains } from "./domains.js";
 
 export const draws = [
   {
+    id: "2026-10-07",
+    period: 3,
+    date: "2026-10-07",
+
+    // 第 1 期开奖后账户归零，之后未再存入 —— 所以本期奖金池仍是零。
+    // 与「本期空缺」是两件独立的事：本期有人获奖，只是奖金为零。
+    pool: 0,
+    perWinner: 0,
+    balanceAfter: 0,
+
+    file: "content/draws/2026-10-07.md",
+
+    winners: [
+      {
+        // 主动授予（章程第三十条），没有申请人，所以称谓由委员会定，用其公示名称。
+        name: "量子位",
+        nameEn: "QbitAI",
+        domainId: "expression",
+        // 本条奖项创设于本期，见 awards.js 的 createdIn。
+        award: "关联最远奖",
+        awardEn: "Farthest Association Prize",
+        metricLabel: "与诺贝尔物理学奖无关的事实",
+        metricLabelEn: "Facts unrelated to the Nobel Prize in Physics",
+        // 取值刻意用纯数字：metric 没有英文变体，中文量词在英文页面上会露馅
+        metric: "1",
+      },
+    ],
+  },
+  {
     id: "2026-09-26",
     period: 2,
     date: "2026-09-26",

@@ -18,6 +18,14 @@
 /** kind: "notice"（公告） | "dispatch"（通讯，含谈话记录与介绍） */
 export const bulletins = [
   {
+    id: "2026-10-02-round-3-preview",
+    kind: "notice",
+    date: "2026-10-02",
+    title: "第 3 期开奖预告",
+    titleEn: "Notice: the third drawing",
+    file: "content/bulletin/2026-10-02-round-3-preview.md",
+  },
+  {
     id: "2026-09-26-round-2-vacant",
     kind: "notice",
     date: "2026-09-26",

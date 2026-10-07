@@ -373,6 +373,18 @@ body {
   font-style: normal;
 }
 
+/* 开奖记录里的附件图（如被引用标题的页面截图）。
+   按**原始尺寸**居中显示，不撑满栏宽 —— 档案里的剪报不该被放大，
+   放大只会糊。真比栏宽还宽时（max-width）才缩下来。 */
+.charter-body img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 2rem auto 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+}
+
 .charter-body ul,
 .charter-body ol {
   margin-left: 1.5rem;
