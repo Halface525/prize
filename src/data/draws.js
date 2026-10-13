@@ -18,6 +18,22 @@ import { domains } from "./domains.js";
 
 export const draws = [
   {
+    id: "2026-10-10",
+    period: 4,
+    date: "2026-10-10",
+
+    // 第 1 期开奖后账户归零，之后未再存入 —— 与第 2、3 期同为「奖金为零」。
+    // 与「本期空缺」仍是两件独立的事。
+    pool: 0,
+    perWinner: 0,
+    balanceAfter: 0,
+
+    file: "content/draws/2026-10-10.md",
+
+    // 空缺：本期无人获奖，数组留空即可。
+    winners: [],
+  },
+  {
     id: "2026-10-07",
     period: 3,
     date: "2026-10-07",
