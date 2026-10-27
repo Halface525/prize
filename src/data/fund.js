@@ -12,7 +12,7 @@
 export const fund = {
   balance: 0,
   currencyMark: "¥",
-  updatedAt: "2026-10-10",
+  updatedAt: "2026-10-17",
   source: "全部来源于 halface 的个人储蓄。",
   sourceEn: "Funded entirely from the personal savings of halface.",
   policy: "本奖不接受任何社会捐助。",
