@@ -18,6 +18,33 @@ import { domains } from "./domains.js";
 
 export const draws = [
   {
+    id: "2026-10-24",
+    period: 6,
+    date: "2026-10-24",
+
+    // 第 1 期开奖后账户归零，之后未再存入 —— 本期有人获奖，奖金仍为零。
+    pool: 0,
+    perWinner: 0,
+    balanceAfter: 0,
+
+    file: "content/draws/2026-10-24.md",
+
+    // 三人合著，记为一名获奖者（联合授予）——拆成三条会让领域、奖项、
+    // 计量在列表里各重复三遍，读起来像三个人分别得了同一个奖。
+    winners: [
+      {
+        name: "半面、哈基仙、匿名者",
+        nameEn: "BAN Mian, HA Jixian, NI Mingzhe",
+        domainId: "expression",
+        award: "接话型友谊奖",
+        awardEn: "Reply-Maintained Friendship Prize",
+        metricLabel: "接话型消息占可编码消息",
+        metricLabelEn: "Share of codable messages that are replies, emoji or quotes",
+        metric: "56.2%",
+      },
+    ],
+  },
+  {
     id: "2026-10-17",
     period: 5,
     date: "2026-10-17",

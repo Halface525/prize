@@ -195,6 +195,22 @@ export const awards = [
     criterionEn: "In a headline, the fact furthest removed from the news it reports.",
     createdIn: 3,
   },
+  {
+    // 创设于第 6 期。subject 标「人」——获奖者是三个人，不是那篇论文；
+    // 同理「已读不回而关系最好奖」也归在表达。别把它当文本类奖项。
+    // 领域放在表达而不是关系：关系领域的总纲是「多为未曾发生之事」，
+    // 而这个奖奖励的恰恰是频繁发生的接话。放错领域会和总纲打架。
+    id: "reply-maintained-friendship",
+    domain: "expression",
+    name: "接话型友谊奖",
+    nameEn: "Reply-Maintained Friendship Prize",
+    subject: "人",
+    subjectEn: "Person",
+    criterion: "可编码消息中，短回应、表情/图片与引用合计占比最高者。",
+    criterionEn:
+      "Highest share of codable messages that are short responses, emoji/images or quotes.",
+    createdIn: 6,
+  },
 
   // ── 六、器物 ─────────────────────────────────────
   {
