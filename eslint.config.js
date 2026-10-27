@@ -5,7 +5,9 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 
 export default [
-  { ignores: ['dist'] },
+  // documents/ 是与本奖无关的另一个项目（自带一套源码），被 eslint 扫进来会产生
+  // 几十条 no-unused-vars，让 `npm run check` 永久失败。它不是本站代码，一律忽略。
+  { ignores: ['dist', 'documents'] },
   {
     files: ['**/*.{js,jsx}'],
     languageOptions: {
