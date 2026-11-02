@@ -18,6 +18,14 @@
 /** kind: "notice"（公告） | "dispatch"（通讯，含谈话记录与介绍） */
 export const bulletins = [
   {
+    id: "2026-10-31-round-7-vacant",
+    kind: "notice",
+    date: "2026-10-31",
+    title: "第 7 期评选结束公告",
+    titleEn: "Notice: round 7 closed",
+    file: "content/bulletin/2026-10-31-round-7-vacant.md",
+  },
+  {
     id: "2026-10-24-round-6-award",
     kind: "notice",
     date: "2026-10-24",
