@@ -18,6 +18,15 @@
 /** kind: "notice"（公告） | "dispatch"（通讯，含谈话记录与介绍） */
 export const bulletins = [
   {
+    // 联系方式变更。这条不改历史公报——第三十三条，公示过的文本不动。
+    id: "2026-11-04-contact-change",
+    kind: "notice",
+    date: "2026-11-04",
+    title: "联系方式变更公告",
+    titleEn: "Notice: change of contact address",
+    file: "content/bulletin/2026-11-04-contact-change.md",
+  },
+  {
     id: "2026-10-31-round-7-vacant",
     kind: "notice",
     date: "2026-10-31",

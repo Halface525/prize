@@ -2,7 +2,7 @@
 export const site = {
   nameZh: "半面奖",
   nameEn: "The Halface Prize",
-  email: "halface16@gmail.com",
+  email: "halface@agent.qq.com",
   committee: "半面奖评选委员会",
   committeeEn: "Halface Prize Selection Committee",
   // 委员人数不在这里，也不在任何写死的地方 —— 从 src/data/committee.js 的名单现算。
