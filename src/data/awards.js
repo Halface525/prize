@@ -211,6 +211,26 @@ export const awards = [
       "Highest share of codable messages that are short responses, emoji/images or quotes.",
     createdIn: 6,
   },
+  {
+    // 创设于第 8 期，**且只授予一次**。别把它当可沿用的奖项。
+    //
+    // 「元」在这里不是形容词。元申请奖的对象是「申请」这一层级，而它自身
+    // 亦须经申请方能获得；第一份申请一旦存在，元层即已关闭，故此后不可能
+    // 再授。章程第十七条：奖项一经入库不得撤销 —— 所以它会永远留在这个
+    // 数组里，但不会出现在第二期的获奖名单上。
+    //
+    // subject 标「人」：获奖者是狗王，不是那封申请信。同理见上一条。
+    id: "meta-application",
+    domain: "expression",
+    name: "元申请奖",
+    nameEn: "The Meta Application Prize",
+    subject: "人",
+    subjectEn: "Person",
+    criterion: "本奖创立以来第一份递交至委员会的申请。本奖项只授予一次。",
+    criterionEn:
+      "The first application ever submitted to the Committee since the Prize was founded. Awarded once only.",
+    createdIn: 8,
+  },
 
   // ── 六、器物 ─────────────────────────────────────
   {

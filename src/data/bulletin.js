@@ -18,6 +18,16 @@
 /** kind: "notice"（公告） | "dispatch"（通讯，含谈话记录与介绍） */
 export const bulletins = [
   {
+    // 第 8 期。正文落款是实际发出的 11-13，而 date 记该期公示日 11-07 ——
+    // 与第 7 期同一存法：期次按应公示日归档，迟延在正文里写明。
+    id: "2026-11-07-round-8-award",
+    kind: "notice",
+    date: "2026-11-07",
+    title: "第 8 期评选结束公告",
+    titleEn: "Notice: round 8 closed",
+    file: "content/bulletin/2026-11-07-round-8-award.md",
+  },
+  {
     // 联系方式变更。这条不改历史公报——第三十三条，公示过的文本不动。
     id: "2026-11-04-contact-change",
     kind: "notice",

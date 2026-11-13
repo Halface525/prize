@@ -18,6 +18,33 @@ import { domains } from "./domains.js";
 
 export const draws = [
   {
+    id: "2026-11-07",
+    period: 8,
+    date: "2026-11-07",
+
+    // 第 1 期开奖后账户归零，之后未再存入 —— 本期有人获奖，奖金仍为零。
+    pool: 0,
+    perWinner: 0,
+    balanceAfter: 0,
+
+    file: "content/draws/2026-11-07.md",
+
+    // metric 写「0 → 1」而不是「47 天」：47 天是这件事的质地，放正文；
+    // 「累计申请数从零变成一」才是这件事在数据层唯一的变化，且不随语言变。
+    winners: [
+      {
+        name: "狗王",
+        nameEn: "Dog King",
+        domainId: "expression",
+        award: "元申请奖",
+        awardEn: "The Meta Application Prize",
+        metricLabel: "累计收到申请",
+        metricLabelEn: "Applications received, cumulative",
+        metric: "0 → 1",
+      },
+    ],
+  },
+  {
     id: "2026-10-31",
     period: 7,
     date: "2026-10-31",
